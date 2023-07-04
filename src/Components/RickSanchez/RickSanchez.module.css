@@ -1,0 +1,31 @@
+.container{
+  background-color: #e7cc2c;
+  padding: 20px;
+  border-radius: 12px;
+  color: #08284f;
+  box-shadow: 2px 0 26px 0 rgba(34, 77, 161, 0.45);
+  -webkit-box-shadow: 2px 0 26px 0 rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 0 26px 0 rgba(0,0,0,0.75);
+  transition: transform 0.25s;
+}
+.container:hover{
+  transform: scale(1.1);
+}
+
+.cardWrap{
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  justify-content: center;
+}
+
+.container h2{
+  text-align: center;
+}
+
+.img {
+  border-radius: 8px;
+  box-shadow: 2px 0 26px -1px rgba(34, 77, 161, 0.45);
+  -webkit-box-shadow: 2px 0 26px -1px rgba(34, 77, 161, 0.45);
+  -moz-box-shadow: 2px 0 26px -1px rgba(34, 77, 161, 0.45);
+}

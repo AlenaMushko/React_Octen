@@ -1,0 +1,26 @@
+.container {
+    margin-top: 20px;
+    padding: 4px;
+    text-align: center;
+    color: #08284f;
+}
+
+.list {
+    padding: 16px;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+    justify-content: space-between;
+    border-radius: 12px;
+    box-shadow: 2px 0 26px 0 rgba(34, 77, 161, 0.45);
+    -webkit-box-shadow: 2px 0 26px 0 rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 0 26px 0 rgba(0, 0, 0, 0.75);
+}
+
+.img {
+    border-radius: 8px;
+    box-shadow: 2px 0 26px -1px rgba(34, 77, 161, 0.45);
+    -webkit-box-shadow: 2px 0 26px -1px rgba(34, 77, 161, 0.45);
+    -moz-box-shadow: 2px 0 26px -1px rgba(34, 77, 161, 0.45);
+}
