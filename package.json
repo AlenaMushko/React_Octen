@@ -1,7 +1,7 @@
 {
   "name": "hw react",
   "version": "0.1.0",
-  "homepage": "https://github.com/AlenaMushko/React_Octen",
+  "homepage": "https://AlenaMushko.github.io/React_Octen",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
