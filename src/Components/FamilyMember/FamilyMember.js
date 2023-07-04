@@ -1,7 +1,7 @@
 import styles from "./FamilyMember.module.css";
 
 const FamilyMember = (props) => {
-    const {member, id, name, gender, status, species, img} = props.info;
+    const {member, id, name, gender, status, species, img} = props;
 
     return (
         <div className={styles.container}>
