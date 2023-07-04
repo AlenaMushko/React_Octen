@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/React_Octen/static/css/main.dc7eeafd.css",
-    "main.js": "/React_Octen/static/js/main.6d735912.js",
+    "main.css": "/React_Octen/static/css/main.72a8fa5d.css",
+    "main.js": "/React_Octen/static/js/main.f3ff1f37.js",
     "index.html": "/React_Octen/index.html",
-    "main.dc7eeafd.css.map": "/React_Octen/static/css/main.dc7eeafd.css.map",
-    "main.6d735912.js.map": "/React_Octen/static/js/main.6d735912.js.map"
+    "main.72a8fa5d.css.map": "/React_Octen/static/css/main.72a8fa5d.css.map",
+    "main.f3ff1f37.js.map": "/React_Octen/static/js/main.f3ff1f37.js.map"
   },
   "entrypoints": [
-    "static/css/main.dc7eeafd.css",
-    "static/js/main.6d735912.js"
+    "static/css/main.72a8fa5d.css",
+    "static/js/main.f3ff1f37.js"
   ]
 }
