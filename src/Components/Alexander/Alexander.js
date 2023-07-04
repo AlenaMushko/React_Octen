@@ -1,13 +1,7 @@
 import styles from "../RickSanchez/RickSanchez.module.css";
 
 const Alexander = (props) => {
-    const {member} = props;
-    const id = 6;
-    const name = 'Alexander';
-    const gender = "Male";
-    const species = "Human";
-    const status = "Dead";
-    const img = "https://rickandmortyapi.com/api/character/avatar/12.jpeg";
+    const {member, id, name, gender, status, species, img} = props;
     return (
         <div className={styles.container}>
             <div className={styles.cardWrap}> {member} № {id}</div>
