@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/AlenaMushko/React_Octen/static/css/main.dc7eeafd.css",
+    "main.js": "/AlenaMushko/React_Octen/static/js/main.d12c5d01.js",
+    "index.html": "/AlenaMushko/React_Octen/index.html",
+    "main.dc7eeafd.css.map": "/AlenaMushko/React_Octen/static/css/main.dc7eeafd.css.map",
+    "main.d12c5d01.js.map": "/AlenaMushko/React_Octen/static/js/main.d12c5d01.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dc7eeafd.css",
+    "static/js/main.d12c5d01.js"
+  ]
+}
