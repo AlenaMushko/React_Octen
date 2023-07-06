@@ -1,0 +1,19 @@
+.user{
+    flex-basis: calc((100vw - 2vw) / 4 );
+}
+
+.userBtn {
+    width: 100%;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: transparent;
+    background-color: darkorange;
+    color: ivory;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.5s;
+}
+
+.userBtn:hover {
+    background-color: darkblue;
+}

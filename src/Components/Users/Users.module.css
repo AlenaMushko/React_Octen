@@ -1,0 +1,6 @@
+.usersWrap{
+    display: flex;
+    gap: 2vw;
+    flex-wrap: wrap;
+justify-content: space-between;
+}

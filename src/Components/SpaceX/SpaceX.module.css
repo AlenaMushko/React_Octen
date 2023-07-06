@@ -1,0 +1,7 @@
+.missionWrap{
+    margin-top: 100px;
+    display: flex;
+    gap: 2vw;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

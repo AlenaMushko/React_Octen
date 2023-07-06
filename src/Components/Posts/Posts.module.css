@@ -1,0 +1,12 @@
+.postList {
+    position: relative;
+    width: 45vw;
+}
+
+.postBox {
+    width: 40vw;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 55vw;
+}

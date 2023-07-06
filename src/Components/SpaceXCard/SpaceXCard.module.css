@@ -1,0 +1,8 @@
+.item {
+    flex-basis: calc((100vw - 2vw) / 4);
+}
+
+.title {
+    font-size: 24px;
+    color: darkorange;
+}
