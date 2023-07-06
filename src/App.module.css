@@ -2,22 +2,3 @@
     padding: 16px;
 }
 
-.text {
-    color: brown;
-    text-align: center;
-    font-size: 42px;
-}
-
-.wrapper {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4vw;
-    justify-content: space-around;
-}
-
-.userName{
-    color: darkblue;
-    text-align: center;
-    font-size: 36px;
-}
