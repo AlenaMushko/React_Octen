@@ -1,4 +1,5 @@
 import {useState} from "react";
+
 import {PostCard} from "../PostCard/PostCard";
 import styles from './Posts.module.css';
 
