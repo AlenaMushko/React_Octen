@@ -5,21 +5,11 @@ import styles from "./App.module.css";
 import {PostCard} from "./components/PostCard/PostCard";
 
 function App() {
-    const [users, setUsers] = useState([]);
+
     const [posts, setPosts] = useState([]);
     const [owenPosts, setOwenPosts] = useState([]);
     const [userName, setUserName] = useState('');
     const [showPostCard, setShowPostCard] = useState(false);
-
-    const fetchUsers = async () => {
-        try {
-            const res = await fetch('https://jsonplaceholder.typicode.com/users');
-            const data = await res.json();
-            setUsers(data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
 
     const fetchPosts = async () => {
         try {
@@ -32,7 +22,6 @@ function App() {
     };
 
     useEffect(() => {
-        fetchUsers();
         fetchPosts();
     }, []);
 
@@ -51,7 +40,7 @@ function App() {
     }
 
     return (<section className={styles.section}>
-        <UsersComponent users={users} showPosts={handleShowPosts}/>
+        <UsersComponent showPosts={handleShowPosts}/>
         {showPostCard &&
             <div className={styles.posts}>
                 <h3 className={styles.posts_title}>{userName}</h3>
