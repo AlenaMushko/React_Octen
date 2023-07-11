@@ -20,7 +20,6 @@ function App() {
         fetchUsers();
     }, []);
 
-    console.log(users)
     return (<section className={styles.section}>
         <UsersList users={users}/>
     </section>);
