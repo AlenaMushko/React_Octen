@@ -1,0 +1,11 @@
+.title {
+    text-align: center;
+    font-size: 36px;
+}
+
+.user_list {
+    display: flex;
+    gap: 2vw;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
