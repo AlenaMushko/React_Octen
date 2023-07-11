@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import {DataContext} from "../../App";
 
-export const SubChild_1_1 = () => {
+export const SubChild11 = () => {
     const dataContext = useContext(DataContext);
 
     return (
