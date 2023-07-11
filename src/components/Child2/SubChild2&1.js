@@ -1,5 +1,5 @@
 
-export const SubChild1_2=()=>{
+export const SubChild21 =()=>{
     return(
         <></>
     )

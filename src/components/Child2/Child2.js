@@ -1,11 +1,11 @@
-import {SubChild2_1} from "./SubChild2_1";
-import {SubChild2_2} from "./SubChild2_2";
+import {SubChild21} from "./SubChild2&1";
+import {SubChild22} from "./SubChild2&2";
 
 export const Child2 = ({handleSendData}) => {
     return (
         <>
-            <SubChild2_1/>
-            <SubChild2_2 handleSendData={handleSendData}/>
+            <SubChild21/>
+            <SubChild22 handleSendData={handleSendData}/>
         </>
     )
 }

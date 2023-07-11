@@ -1,7 +1,7 @@
 
-import styles from './SubChild2_2.module.css';
+import styles from './SubChild2&2.module.css';
 
-export const SubChild2_2=({handleSendData})=>{
+export const SubChild22=({handleSendData})=>{
     const data='Вона: — Я, між iншим, також програмістка!\n' +
         'Він: — На чім пишеш?\n' +
         '— Не розуміла.\n' +
