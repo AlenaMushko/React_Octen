@@ -1,4 +1,15 @@
 .section {
     padding: 16px;
+    color: darksalmon;
+}
+
+.posts{
+    margin-top: 50px;
+}
+
+.posts_title {
+    text-align: center;
+    font-size: 26px;
+    color: darkblue;
 }
 
