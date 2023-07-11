@@ -1,7 +1,9 @@
-import {useState} from "react";
+import {createContext, useState} from "react";
 
 import {Child1, Child2} from "./components";
 import styles from "./App.module.css";
+
+export const DataContext = createContext(null);
 
 function App() {
 
@@ -12,8 +14,10 @@ function App() {
     }
 
     return (<div className={styles.section}>
-        <Child1 sendData={sendData}/>
-        <Child2 handleSendData={handleSendData}/>
+        <DataContext.Provider value={{sendData, handleSendData}}>
+            <Child1/>
+            <Child2/>
+        </DataContext.Provider>
     </div>);
 }
 
