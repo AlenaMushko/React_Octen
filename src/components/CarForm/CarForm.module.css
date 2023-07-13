@@ -1,0 +1,5 @@
+.btn_box{
+    display: flex;
+    gap: 2vw;
+    justify-content: space-around;
+}
