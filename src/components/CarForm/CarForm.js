@@ -21,7 +21,6 @@ export const CarForm = () => {
         return fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
             method: 'GET',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         })

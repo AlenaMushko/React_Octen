@@ -7,6 +7,7 @@ import myStyles from './Cars.module.css';
 export const Cars = ({cars, updateCar}) => {
 
     const [newCars, setNewCars] = useState([]);
+
     useEffect(() => {
         setNewCars(cars)
     }, [cars]);
