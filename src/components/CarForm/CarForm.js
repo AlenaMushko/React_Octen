@@ -10,8 +10,7 @@ import {CarsValidators} from "../../validators";
 import {Label} from "../Label/Label";
 import {Btn} from "../Btn/Btn";
 
-export const CarForm = () => {
-    // const initialFormState = {brand: '', price: null, year: null};
+export const CarForm = ({setIsLoading}) => {
 
     const [cars, setCars] = useState([]);
     const [updateCar, setUpdateCar] = useState(null);
@@ -21,23 +20,15 @@ export const CarForm = () => {
     const {
         register,
         reset,
-        // setValue,
         handleSubmit,
         formState: {errors, isValid},
     } = useForm({
         mode: 'all',
         resolver: joiResolver(CarsValidators),
-        // defaultValues: updateCar ? updateCar : initialFormState,
     });
 
-    // const setFormValues = () => {
-    // setValue('brand', updateCar ? updateCar.brand : '', {shouldValidate: true});
-    // setValue('price', updateCar ? updateCar.price : '', {shouldValidate: true});
-    // setValue('year', updateCar ? updateCar.year : '', {shouldValidate: true});
-    // };
-
-
     const fetchCar = () => {
+        setIsLoading(true);
         return fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
             method: 'GET',
             headers: {
@@ -46,7 +37,10 @@ export const CarForm = () => {
         })
             .then(res => res.json())
             .then(data => data)
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     useEffect(() => {
@@ -63,6 +57,7 @@ export const CarForm = () => {
     };
 
     const handleCreate = (data) => {
+        setIsLoading(true);
         fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
             method: 'POST',
             headers: {
@@ -82,7 +77,10 @@ export const CarForm = () => {
                 Notify.success(' Added car');
                 setCars(prevCars => [...prevCars, data]);
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
     const handleGetId = (data) => {
         setUpdateCar(data);
@@ -91,6 +89,7 @@ export const CarForm = () => {
     }
 
     const handleUpdate = (data, idCar) => {
+        setIsLoading(true);
         fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${idCar}`, {
             method: 'PUT',
             headers: {
@@ -105,12 +104,15 @@ export const CarForm = () => {
                 return value.json()
             })
             .then(data => {
-                console.log(data)
                 reset();
+                console.log(data)
+                Notify.success(' Updated car');
+                setCars(prevCars => prevCars.map(car => (car.id === updateCar.id ? updateCar : car)));
             })
-            .catch(err => console.log(err));
-
-        Notify.success(' Updated car');
+            .catch(err => console.log(err))
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     return (
@@ -133,13 +135,9 @@ export const CarForm = () => {
 
                     <div className={myStyles.btn_box}>
                         <Btn
-                            // valid={isValid}
+                            valid={!isValid}
                             value={isCarUpdate ? 'Update car' : 'Add car'}
-                            // onClick={isCarUpdate ? () => handleUpdate(updateCar.id) : handleCreate}
                         />
-
-                        {/*<Btn valid={!isValid} value={'Add car'} onClick={handleCreate}/>*/}
-                        {/*<Btn valid={!isValid} value={'Update car'} onClick={() => handleUpdate(updateCar.id)}/>*/}
                     </div>
                 </form>
             </div>
@@ -149,6 +147,7 @@ export const CarForm = () => {
                                fetchCar={fetchCar}
                                updateCar={handleGetId}
                                setIsCarUpdate={setIsCarUpdate}
+                               setIsLoading={setIsLoading}
                 />}
             </div>
         </>

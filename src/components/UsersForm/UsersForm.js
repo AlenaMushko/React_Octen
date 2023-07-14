@@ -7,7 +7,7 @@ import { UsersValidators} from "../../validators";
 import {Label} from "../Label/Label";
 import {Btn} from "../Btn/Btn";
 
-export const UsersForm = () => {
+export const UsersForm = ({ setIsLoading}) => {
     const {
         register,
         reset,
@@ -18,10 +18,13 @@ export const UsersForm = () => {
         resolver: joiResolver(UsersValidators)
     })
     const formSubmit = (data) => {
-
+        setIsLoading(true);
 
         fetch('http://jsonplaceholder.typicode.com/users', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(data)
         })
             .then(value => {
@@ -32,12 +35,13 @@ export const UsersForm = () => {
             })
             .then(data => {
                 reset();
+                Notify.success(' Added user');
                 console.log(data)
             })
-            .catch(err => console.log(err));
-
-
-        Notify.success(' Added user');
+            .catch(err => console.log(err))
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     return (
@@ -51,7 +55,9 @@ export const UsersForm = () => {
                 <Label value="Website:" type="text" nameLabel="website" errors={errors} register={register}/>
                 <Label value="Company:" type="text" nameLabel="company" errors={errors} register={register}/>
 
-                <Btn valid={!isValid} value={'Add user'}/>
+                <Btn
+                    valid={!isValid}
+                     value={'Add user'}/>
             </form>
         </div>
     );

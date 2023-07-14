@@ -8,7 +8,7 @@ import {CommentsValidators} from "../../validators";
 import {Label} from "../Label/Label";
 import {Btn} from "../Btn/Btn";
 
-export const CommentsForm = () => {
+export const CommentsForm = ({ setIsLoading}) => {
     const {
         register,
         reset,
@@ -24,7 +24,7 @@ export const CommentsForm = () => {
             ...data,
             id: 1
         };
-
+        setIsLoading(true);
         fetch('http://jsonplaceholder.typicode.com/comments', {
             method: 'POST',
             body: JSON.stringify(requestData)
@@ -39,7 +39,10 @@ export const CommentsForm = () => {
                 reset();
                 console.log(data)
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+            .finally(()=>{
+                setIsLoading(false);
+            });
 
         Notify.success(' Added comment');
     };

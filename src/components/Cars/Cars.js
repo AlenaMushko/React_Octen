@@ -4,15 +4,17 @@ import {Notify} from 'notiflix/build/notiflix-notify-aio';
 import styles from '../UsersForm/UsersForm.module.css';
 import myStyles from './Cars.module.css';
 
-export const Cars = ({cars, updateCar, setIsCarUpdate}) => {
+export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
 
-    const [newCars, setNewCars] = useState([]);
+    const [newCars, setNewCars] = useState(cars);
+    const [deletedCar, setDeletedCar] = useState(false);
 
     useEffect(() => {
         setNewCars(cars)
-    }, [cars]);
+    }, [cars, deletedCar]);
 
     const handleDelete = (idCar) => {
+        setIsLoading(true);
         fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${idCar}`, {
             method: 'DELETE',
             headers: {
@@ -31,30 +33,42 @@ export const Cars = ({cars, updateCar, setIsCarUpdate}) => {
             })
             .then(data => {
                 Notify.success('Deleted car');
-                console.log('Delete', data)
+                console.log('Delete', data);
+                setNewCars(prevCars => prevCars.filter(car => car.id !== idCar));
             })
             .catch(err => {
                 console.error(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
-        setNewCars(cars.filter(car => car.id !== idCar))
     };
 
+
     return (
-        <ul className={myStyles.car_list}>
-            {newCars.map(car => (
-                <li key={car.id} className={myStyles.car_item}>
-                    <p><b>Brand:</b>{car.brand}</p>
-                    <p><b>Price:</b>{car.price}</p>
-                    <p><b>Year:</b>{car.year}</p>
-                    <div className={myStyles.car_btb}>
-                        <button className={styles.btn} onClick={()=>{
-                            setIsCarUpdate(true);
-                            updateCar(car)}}>Update</button>
-                        <button className={styles.btn} onClick={() => handleDelete(car.id)} >Delete</button>
-                    </div>
-                </li>
-            ))}
-        </ul>
+        <>
+            <ul className={myStyles.car_list}>
+                {newCars.map(car => (
+                    <li key={car.id} className={myStyles.car_item}>
+                        <p><b>Brand:</b>{car.brand}</p>
+                        <p><b>Price:</b>{car.price}</p>
+                        <p><b>Year:</b>{car.year}</p>
+                        <div className={myStyles.car_btb}>
+                            <button className={styles.btn}
+                                    onClick={() => {
+                                        setIsCarUpdate(true);
+                                        updateCar(car)
+                                    }}>Update
+                            </button>
+                            <button className={styles.btn}
+                                    onClick={() => handleDelete(car.id)}
+                            >Delete
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </>
     );
 };
 

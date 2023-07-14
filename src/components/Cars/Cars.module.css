@@ -1,12 +1,12 @@
-.car_list{
+.car_list {
     display: flex;
     gap: 3%;
     flex-wrap: wrap;
 
 }
 
-.car_item{
-    width:calc((100% - 12%) / 4 );
+.car_item {
+    width: calc((100% - 12%) / 4);
     background-color: white;
     color: #0c0343;
     padding: 20px;
@@ -17,7 +17,7 @@
     -moz-box-shadow: 10px 10px 92px -1px rgba(72, 61, 139, 0.69);
 }
 
-.car_btb{
+.car_btb {
     display: flex;
     justify-content: space-between;
 }
