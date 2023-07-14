@@ -7,11 +7,10 @@ import myStyles from './Cars.module.css';
 export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
 
     const [newCars, setNewCars] = useState(cars);
-    const [deletedCar, setDeletedCar] = useState(false);
 
     useEffect(() => {
         setNewCars(cars)
-    }, [cars, deletedCar]);
+    }, [cars]);
 
     const handleDelete = (idCar) => {
         setIsLoading(true);
@@ -43,7 +42,6 @@ export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
                 setIsLoading(false);
             });
     };
-
 
     return (
         <>
