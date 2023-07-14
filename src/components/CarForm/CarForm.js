@@ -48,7 +48,7 @@ export const CarForm = ({setIsLoading}) => {
             .then(data => {
                 setCars(data);
             });
-    }, [fetchCar]);
+    }, []);
 
     const carsFormSubmit = (data) => {
         isCarUpdate
