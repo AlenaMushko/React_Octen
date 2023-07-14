@@ -4,7 +4,7 @@ import {Notify} from 'notiflix/build/notiflix-notify-aio';
 import styles from '../UsersForm/UsersForm.module.css';
 import myStyles from './Cars.module.css';
 
-export const Cars = ({cars, updateCar}) => {
+export const Cars = ({cars, updateCar, setIsCarUpdate}) => {
 
     const [newCars, setNewCars] = useState([]);
 
@@ -30,7 +30,7 @@ export const Cars = ({cars, updateCar}) => {
                 }
             })
             .then(data => {
-                Notify.info('Delete car');
+                Notify.success('Deleted car');
                 console.log('Delete', data)
             })
             .catch(err => {
@@ -47,8 +47,10 @@ export const Cars = ({cars, updateCar}) => {
                     <p><b>Price:</b>{car.price}</p>
                     <p><b>Year:</b>{car.year}</p>
                     <div className={myStyles.car_btb}>
-                        <button className={styles.btn} onClick={()=>updateCar(car)}>Update</button>
-                        <button className={styles.btn} onClick={() => handleDelete(car.id)}>Delete</button>
+                        <button className={styles.btn} onClick={()=>{
+                            setIsCarUpdate(true);
+                            updateCar(car)}}>Update</button>
+                        <button className={styles.btn} onClick={() => handleDelete(car.id)} >Delete</button>
                     </div>
                 </li>
             ))}

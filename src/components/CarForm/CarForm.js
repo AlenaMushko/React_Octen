@@ -1,21 +1,41 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {Notify} from 'notiflix/build/notiflix-notify-aio';
+import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
 
 import {Cars} from "../Cars/Cars";
 import styles from '../UsersForm/UsersForm.module.css';
 import myStyles from './CarForm.module.css';
+import {CarsValidators} from "../../validators";
+import {Label} from "../Label/Label";
+import {Btn} from "../Btn/Btn";
 
 export const CarForm = () => {
+    // const initialFormState = {brand: '', price: null, year: null};
+
     const [cars, setCars] = useState([]);
     const [updateCar, setUpdateCar] = useState(null);
+    const [isCarUpdate, setIsCarUpdate] = useState(false)
 
-    const brandRef = useRef(null);
-    const priceRef = useRef(null);
-    const yearRef = useRef(null);
 
-    let brandValue = null;
-    let priceValue = null
-    let yearValue = null;
+    const {
+        register,
+        reset,
+        // setValue,
+        handleSubmit,
+        formState: {errors, isValid},
+    } = useForm({
+        mode: 'all',
+        resolver: joiResolver(CarsValidators),
+        // defaultValues: updateCar ? updateCar : initialFormState,
+    });
+
+    // const setFormValues = () => {
+    // setValue('brand', updateCar ? updateCar.brand : '', {shouldValidate: true});
+    // setValue('price', updateCar ? updateCar.price : '', {shouldValidate: true});
+    // setValue('year', updateCar ? updateCar.year : '', {shouldValidate: true});
+    // };
+
 
     const fetchCar = () => {
         return fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
@@ -36,109 +56,90 @@ export const CarForm = () => {
             });
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        brandValue = brandRef.current.value;
-        priceValue = parseInt(priceRef.current.value);
-        yearValue = parseInt(yearRef.current.value);
-
-        if (!brandValue || !priceValue || !yearValue) {
-            Notify.failure('Please fill in all fields correctly');
-            return;
-        }
-        document.getElementById("cars-form").reset();
+    const carsFormSubmit = (data) => {
+        isCarUpdate
+            ? handleUpdate(data, updateCar.id)
+            : handleCreate(data)
     };
 
-    const handleCreate = () => {
+    const handleCreate = (data) => {
         fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                brand: brandRef.current.value,
-                price: priceRef.current.value,
-                year: yearRef.current.value,
-            })
+            body: JSON.stringify(data)
         })
-            .then(res => res.json())
+            .then(value => {
+                if (!value.ok) {
+                    throw  Error(value.status)
+                }
+                return value.json()
+            })
             .then(data => {
-                Notify.info('Created car');
-                fetchCar()
-                    .then(data => {
-                        setCars(data);
-                    });
-                console.log('create', data)
-            });
+                console.log(data)
+                reset();
+                Notify.success(' Added car');
+                setCars(prevCars => [...prevCars, data]);
+            })
+            .catch(err => console.log(err));
     };
-
     const handleGetId = (data) => {
         setUpdateCar(data);
+        setIsCarUpdate(true);
+        reset();
     }
 
-    const handleUpdate = (idCar) => {
+    const handleUpdate = (data, idCar) => {
         fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${idCar}`, {
             method: 'PUT',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                id: idCar,
-                brand: brandRef.current.value,
-                price: priceRef.current.value,
-                year: yearRef.current.value,
-            })
+            body: JSON.stringify(data)
         })
-            .then(res => res.json())
+            .then(value => {
+                if (!value.ok) {
+                    throw  Error(value.status)
+                }
+                return value.json()
+            })
             .then(data => {
-                Notify.info('Car information is updated');
-                fetchCar()
-                    .then(data => {
-                        setCars(data);
-                    });
-                console.log('Update', data)
-            });
+                console.log(data)
+                reset();
+            })
+            .catch(err => console.log(err));
+
+        Notify.success(' Updated car');
     };
 
     return (
         <>
             <div className={styles.form_box}>
-                <form id='cars-form' className={styles.form} onSubmit={handleSubmit}>
-                    <label>Brand:
-                        <input type='text'
-                               ref={brandRef}
-                               className={styles.form_input}
-                               value={updateCar?.brand || ''}
-                               onChange={(e) => setUpdateCar({...updateCar, brand: e.target.value})}
-                               pattern='^[a-zA-Zа-яА-яёЁіІїЇ]{1,20}$' required/>
-                    </label>
-                    <label>Price:
-                        <input type='number'
-                               ref={priceRef}
-                               value={updateCar?.price || ''}
-                               onChange={(e) => setUpdateCar({...updateCar, price: e.target.value})}
-                               className={styles.form_input}
-                               min='0' max='1000000'
-                               required/>
-                    </label>
-                    <label>Year:
-                        <input type='number'
-                               ref={yearRef}
-                               className={styles.form_input}
-                               value={updateCar?.year || ''}
-                               onChange={(e) => setUpdateCar({...updateCar, year: e.target.value})}
-                               min='1990' max='2023'
-                               required/>
-                    </label>
+                <form id='cars-form' className={styles.form} onSubmit={handleSubmit(carsFormSubmit)}>
+
+                    <Label value="Brand:" type="text" nameLabel="brand" errors={errors} register={register}
+                           valueInput={updateCar?.brand || ''}
+                           onChange={(e) => setUpdateCar({...updateCar, brand: e.target.value})}
+                    />
+                    <Label value="Price:" type="number" nameLabel="price" errors={errors} register={register}
+                           valueInput={updateCar?.price || ''}
+                           onChange={(e) => setUpdateCar({...updateCar, price: e.target.value})}
+                    />
+                    <Label value="Year:" type="number" nameLabel="year" errors={errors} register={register}
+                           valueInput={updateCar?.year || ''}
+                           onChange={(e) => setUpdateCar({...updateCar, year: e.target.value})}
+                    />
 
                     <div className={myStyles.btn_box}>
-                        <input type='submit' value='Add car' onClick={handleCreate} className={styles.btn}/>
-                        <input type='submit' value='Update car'
-                               onClick={() => handleUpdate(updateCar.id)}
-                               className={styles.btn}/>
+                        <Btn
+                            // valid={isValid}
+                            value={isCarUpdate ? 'Update car' : 'Add car'}
+                            // onClick={isCarUpdate ? () => handleUpdate(updateCar.id) : handleCreate}
+                        />
+
+                        {/*<Btn valid={!isValid} value={'Add car'} onClick={handleCreate}/>*/}
+                        {/*<Btn valid={!isValid} value={'Update car'} onClick={() => handleUpdate(updateCar.id)}/>*/}
                     </div>
                 </form>
             </div>
@@ -147,6 +148,7 @@ export const CarForm = () => {
                 {cars && <Cars cars={cars}
                                fetchCar={fetchCar}
                                updateCar={handleGetId}
+                               setIsCarUpdate={setIsCarUpdate}
                 />}
             </div>
         </>
