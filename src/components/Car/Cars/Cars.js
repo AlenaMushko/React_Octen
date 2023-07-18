@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Notify} from 'notiflix/build/notiflix-notify-aio';
 
-import styles from '../../UsersForm/UsersForm.module.css';
 import myStyles from './Cars.module.css';
 import {removeCar} from "../../../services/carsApiServices";
+import CarCard from "../../../api/CarCard";
 
 export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading, setIsSave}) => {
-    console.log(cars)
     const [newCars, setNewCars] = useState(cars);
 
     useEffect(() => {
@@ -20,9 +19,9 @@ export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading, setIsSave})
             const car = await removeCar(idCar);
             Notify.success('Deleted car');
             console.log('Delete', car);
-            setIsSave(prev=>!prev);
+            setIsSave(prev => !prev);
             setNewCars(prevCars => prevCars.filter(car => car.id !== idCar));
-            setIsSave(prev=>!prev);
+            setIsSave(prev => !prev);
         } catch (err) {
             console.log(err.message);
         } finally {
@@ -35,24 +34,14 @@ export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading, setIsSave})
     return (
         <>
             <ul className={myStyles.car_list}>
-                {newCars?.map((car,{id}) => (
-                    <li key={id} className={myStyles.car_item}>
-                        <p><b>Brand:</b>{car.brand}</p>
-                        <p><b>Price:</b>{car.price}</p>
-                        <p><b>Year:</b>{car.year}</p>
-                        <div className={myStyles.car_btb}>
-                            <button className={styles.btn}
-                                    onClick={() => {
-                                        setIsCarUpdate(true);
-                                        updateCar(car)
-                                    }}>Update
-                            </button>
-                            <button className={styles.btn}
-                                    onClick={() => handleDelete(car.id)}
-                            >Delete
-                            </button>
-                        </div>
-                    </li>
+                {newCars?.map((car) => (
+                    <CarCard
+                             key={car.id}
+                             car={car}
+                             setIsCarUpdate={setIsCarUpdate}
+                             updateCar={updateCar}
+                             handleDelete={handleDelete}
+                    />
                 ))}
             </ul>
         </>

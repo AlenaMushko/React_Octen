@@ -5,8 +5,6 @@ const carsAxios = axios.create({
     baseURL: CARS_BASEURL,
 });
 
-// axios.defaults.baseURL = CARS_BASEURL;
-
 export const getCar = async () => {
     try {
         const {data} = await carsAxios.get('');
