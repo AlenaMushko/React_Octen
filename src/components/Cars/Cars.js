@@ -3,6 +3,7 @@ import {Notify} from 'notiflix/build/notiflix-notify-aio';
 
 import styles from '../UsersForm/UsersForm.module.css';
 import myStyles from './Cars.module.css';
+import {removeCar} from "../../services/carsApiServices";
 
 export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
 
@@ -12,35 +13,22 @@ export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
         setNewCars(cars)
     }, [cars]);
 
-    const handleDelete = (idCar) => {
+    const handleDelete = async (idCar) => {
         setIsLoading(true);
-        fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${idCar}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Deleted request failed');
-                }
-                if (res.status === 204) {
-                    return null;
-                } else {
-                    return res.json();
-                }
-            })
-            .then(data => {
-                Notify.success('Deleted car');
-                console.log('Delete', data);
-                setNewCars(prevCars => prevCars.filter(car => car.id !== idCar));
-            })
-            .catch(err => {
-                console.error(err);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+
+        try {
+            const car = await removeCar(idCar);
+            Notify.success('Deleted car');
+            console.log('Delete', car);
+            setNewCars(prevCars => prevCars.filter(car => car.id !== idCar));
+        } catch (err) {
+            console.log(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+
+        setIsLoading(false);
+
     };
 
     return (

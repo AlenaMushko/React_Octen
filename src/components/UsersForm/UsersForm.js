@@ -3,12 +3,12 @@ import {joiResolver} from "@hookform/resolvers/joi";
 import {useForm} from "react-hook-form";
 
 import styles from './UsersForm.module.css';
-import { UsersValidators} from "../../validators";
+import {UsersValidators} from "../../validators";
 import {Label} from "../Label/Label";
 import {Btn} from "../Btn/Btn";
-import {postUser} from "../../services/apiServices";
+import { postUser} from "../../services/apiServices";
 
-export const UsersForm = ({ setIsLoading}) => {
+export const UsersForm = ({setIsLoading}) => {
     const {
         register,
         reset,
@@ -21,33 +21,17 @@ export const UsersForm = ({ setIsLoading}) => {
     const formSubmit = async (data) => {
         setIsLoading(true);
 
-            // const user = await  postUser(data)
-            // console.log(user)
+        try {
+            const user = await postUser(data);
+            reset();
+            console.log(user);
+        } catch (err) {
+            console.log(err.message);
+        } finally {
+            setIsLoading(false);
+        }
 
-
-
-        fetch('http://jsonplaceholder.typicode.com/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-            .then(value => {
-                if (!value.ok) {
-                    throw  Error(value.status)
-                }
-                return value.json()
-            })
-            .then(data => {
-                reset();
-                Notify.success(' Added user');
-                console.log(data)
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setIsLoading(false);
-            });
+        Notify.success(' Added user');
     };
 
     return (
@@ -63,7 +47,7 @@ export const UsersForm = ({ setIsLoading}) => {
 
                 <Btn
                     valid={!isValid}
-                     value={'Add user'}/>
+                    value={'Add user'}/>
             </form>
         </div>
     );

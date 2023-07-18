@@ -9,6 +9,7 @@ import myStyles from './CarForm.module.css';
 import {CarsValidators} from "../../validators";
 import {Label} from "../Label/Label";
 import {Btn} from "../Btn/Btn";
+import {getCar, postCar, putCar} from "../../services/carsApiServices";
 
 export const CarForm = ({setIsLoading}) => {
 
@@ -27,20 +28,18 @@ export const CarForm = ({setIsLoading}) => {
         resolver: joiResolver(CarsValidators),
     });
 
-    const fetchCar = () => {
+    const fetchCar = async () => {
         setIsLoading(true);
-        return fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => res.json())
-            .then(data => data)
-            .catch(err => console.log(err))
-            .finally(() => {
-                setIsLoading(false);
-            });
+
+        try {
+            const cars = await getCar();
+            reset();
+            return cars;
+        } catch (err) {
+            console.log(err.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -56,63 +55,41 @@ export const CarForm = ({setIsLoading}) => {
             : handleCreate(data)
     };
 
-    const handleCreate = (data) => {
+    const handleCreate = async (data) => {
         setIsLoading(true);
-        fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-            .then(value => {
-                if (!value.ok) {
-                    throw  Error(value.status)
-                }
-                return value.json()
-            })
-            .then(data => {
-                console.log(data)
-                reset();
-                Notify.success(' Added car');
-                setCars(prevCars => [...prevCars, data]);
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setIsLoading(false);
-            });
+
+        try {
+            const car = await postCar(data);
+            console.log(car)
+            reset();
+            Notify.success(' Added car');
+            setCars(prevCars => [...prevCars, data]);
+        } catch (err) {
+            console.log(err.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
     const handleGetId = (data) => {
         setUpdateCar(data);
         setIsCarUpdate(true);
         reset();
-    }
+    };
 
-    const handleUpdate = (data, idCar) => {
+    const handleUpdate = async (data, idCar) => {
         setIsLoading(true);
-        fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${idCar}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-            .then(value => {
-                if (!value.ok) {
-                    throw  Error(value.status)
-                }
-                return value.json()
-            })
-            .then(data => {
-                reset();
-                console.log(data)
-                Notify.success(' Updated car');
-                setCars(prevCars => prevCars.map(car => (car.id === updateCar.id ? updateCar : car)));
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setIsLoading(false);
-            });
+
+        try {
+            const car = await putCar(data, idCar);
+            console.log(car)
+            reset();
+            Notify.success(' Updated car');
+            setCars(prevCars => prevCars.map(car => (car.id === updateCar.id ? updateCar : car)));
+        } catch (err) {
+            console.log(err.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (

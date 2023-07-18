@@ -1,26 +1,45 @@
 import axios from 'axios';
+import {Endpoints, JSONPLACEHOLDER_BASEURL} from "../api/endpoints";
 
-export const postUser = async (user)=>{
-   try {
-       const res = await axios.post('http://jsonplaceholder.typicode.com/users', user);
-       console.log(res)
-   } catch (err) {
-       console.log(err.message)
-   }
-};
 
-export const postComment = async (comment)=>{
+const jsonplaceholderAxios = axios.create({
+    baseURL: JSONPLACEHOLDER_BASEURL
+});
 
-        console.log(comment)
-        const res = await axios({
-                method: 'POST',
-            url: "http://jsonplaceholder.typicode.com/comments",
-            data: comment,
-            headers: { 'Content-Type': 'application/json'},
-        })
+// axios.defaults.baseURL = JSONPLACEHOLDER_BASEURL;
 
-    console.log(res)
+export const postUser = async (user) => {
+    console.log(JSONPLACEHOLDER_BASEURL)
+    try {
+        const {data} = await jsonplaceholderAxios.post(Endpoints.USERS,
+            user, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+        return data;
+    } catch (err) {
+        console.log(err.message);
+    }
+}
 
+export const postComment = async (comment) => {
+    console.log(JSONPLACEHOLDER_BASEURL)
+    console.log(Endpoints.COMMENTS)
+    console.log(comment)
+    try {
+        const {data} = await jsonplaceholderAxios.post(Endpoints.COMMENTS,
+            comment, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+        return data;
+    } catch (err) {
+        console.log(err.message);
+    }
 }
 
 
