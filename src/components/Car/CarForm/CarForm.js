@@ -4,12 +4,12 @@ import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 
 import {Cars} from "../Cars/Cars";
-import styles from '../UsersForm/UsersForm.module.css';
+import styles from '../../UsersForm/UsersForm.module.css';
 import myStyles from './CarForm.module.css';
-import {CarsValidators} from "../../validators";
-import {Label} from "../Label/Label";
-import {Btn} from "../Btn/Btn";
-import {getCar, postCar, putCar} from "../../services/carsApiServices";
+import {CarsValidators} from "../../../validators";
+import {Label} from "../../Label/Label";
+import {Btn} from "../../Btn/Btn";
+import {getCar, postCar, putCar} from "../../../services/carsApiServices";
 
 export const CarForm = ({setIsLoading}) => {
 
@@ -21,11 +21,18 @@ export const CarForm = ({setIsLoading}) => {
     const {
         register,
         reset,
+        setValue,
         handleSubmit,
-        formState: {errors, isValid},
+        formState: {errors,
+            isValid},
     } = useForm({
         mode: 'all',
         resolver: joiResolver(CarsValidators),
+        defaultValues:{
+            brand: '',
+            price:'',
+            year:''
+        }
     });
 
     const fetchCar = async () => {
@@ -52,7 +59,11 @@ export const CarForm = ({setIsLoading}) => {
     const carsFormSubmit = (data) => {
         isCarUpdate
             ? handleUpdate(data, updateCar.id)
-            : handleCreate(data)
+            : handleCreate(data);
+
+        setValue('brand', '');
+        setValue('price', '');
+        setValue('year', '')
     };
 
     const handleCreate = async (data) => {
@@ -61,7 +72,7 @@ export const CarForm = ({setIsLoading}) => {
         try {
             const car = await postCar(data);
             console.log(car)
-            reset();
+            // reset();
             Notify.success(' Added car');
             setCars(prevCars => [...prevCars, data]);
         } catch (err) {
@@ -73,8 +84,16 @@ export const CarForm = ({setIsLoading}) => {
     const handleGetId = (data) => {
         setUpdateCar(data);
         setIsCarUpdate(true);
-        reset();
+        // reset();
     };
+
+    useEffect(() => {
+        reset({
+            brand: '',
+            price:'',
+            year:''
+        })
+    }, [reset])
 
     const handleUpdate = async (data, idCar) => {
         setIsLoading(true);
@@ -82,9 +101,9 @@ export const CarForm = ({setIsLoading}) => {
         try {
             const car = await putCar(data, idCar);
             console.log(car)
-            reset();
             Notify.success(' Updated car');
             setCars(prevCars => prevCars.map(car => (car.id === updateCar.id ? updateCar : car)));
+            // reset({ ...data })
         } catch (err) {
             console.log(err.message);
         } finally {

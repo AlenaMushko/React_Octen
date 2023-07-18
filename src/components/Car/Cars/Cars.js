@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Notify} from 'notiflix/build/notiflix-notify-aio';
 
-import styles from '../UsersForm/UsersForm.module.css';
+import styles from '../../UsersForm/UsersForm.module.css';
 import myStyles from './Cars.module.css';
-import {removeCar} from "../../services/carsApiServices";
+import {removeCar} from "../../../services/carsApiServices";
 
 export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
 

@@ -1,4 +1,4 @@
-import {UsersForm, CommentsForm, CarForm} from "./components";
+import {UsersForm, CommentsForm, CarForm, CarContainer} from "./components";
 
 import styles from "./App.module.css";
 import React, {useState} from "react";
@@ -11,7 +11,7 @@ function App() {
         {isLoading && <Loader/>}
         <UsersForm setIsLoading={setIsLoading}/>
         <CommentsForm setIsLoading={setIsLoading}/>
-        <CarForm setIsLoading={setIsLoading}/>
+        <CarContainer setIsLoading={setIsLoading}/>
     </section>);
 }
 
