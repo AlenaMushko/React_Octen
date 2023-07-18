@@ -5,8 +5,8 @@ import styles from '../../UsersForm/UsersForm.module.css';
 import myStyles from './Cars.module.css';
 import {removeCar} from "../../../services/carsApiServices";
 
-export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
-
+export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading, setIsSave}) => {
+    console.log(cars)
     const [newCars, setNewCars] = useState(cars);
 
     useEffect(() => {
@@ -20,7 +20,9 @@ export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
             const car = await removeCar(idCar);
             Notify.success('Deleted car');
             console.log('Delete', car);
+            setIsSave(prev=>!prev);
             setNewCars(prevCars => prevCars.filter(car => car.id !== idCar));
+            setIsSave(prev=>!prev);
         } catch (err) {
             console.log(err.message);
         } finally {
@@ -28,14 +30,13 @@ export const Cars = ({cars, updateCar, setIsCarUpdate, setIsLoading}) => {
         }
 
         setIsLoading(false);
-
     };
 
     return (
         <>
             <ul className={myStyles.car_list}>
-                {newCars.map(car => (
-                    <li key={car.id} className={myStyles.car_item}>
+                {newCars?.map((car,{id}) => (
+                    <li key={id} className={myStyles.car_item}>
                         <p><b>Brand:</b>{car.brand}</p>
                         <p><b>Price:</b>{car.price}</p>
                         <p><b>Year:</b>{car.year}</p>

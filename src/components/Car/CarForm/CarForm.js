@@ -16,7 +16,7 @@ export const CarForm = ({setIsLoading}) => {
     const [cars, setCars] = useState([]);
     const [updateCar, setUpdateCar] = useState(null);
     const [isCarUpdate, setIsCarUpdate] = useState(false)
-
+    const [isSave, setIsSave] = useState(null);
 
     const {
         register,
@@ -60,10 +60,7 @@ export const CarForm = ({setIsLoading}) => {
         isCarUpdate
             ? handleUpdate(data, updateCar.id)
             : handleCreate(data);
-
-        setValue('brand', '');
-        setValue('price', '');
-        setValue('year', '')
+        setIsSave(prev=>!prev);
     };
 
     const handleCreate = async (data) => {
@@ -72,7 +69,7 @@ export const CarForm = ({setIsLoading}) => {
         try {
             const car = await postCar(data);
             console.log(car)
-            // reset();
+            setIsSave(prev=>!prev)
             Notify.success(' Added car');
             setCars(prevCars => [...prevCars, data]);
         } catch (err) {
@@ -84,16 +81,13 @@ export const CarForm = ({setIsLoading}) => {
     const handleGetId = (data) => {
         setUpdateCar(data);
         setIsCarUpdate(true);
-        // reset();
     };
 
     useEffect(() => {
-        reset({
-            brand: '',
-            price:'',
-            year:''
-        })
-    }, [reset])
+            setValue('brand', '')
+            setValue('price', '')
+            setValue('year', '')
+    }, [isSave])
 
     const handleUpdate = async (data, idCar) => {
         setIsLoading(true);
@@ -101,9 +95,9 @@ export const CarForm = ({setIsLoading}) => {
         try {
             const car = await putCar(data, idCar);
             console.log(car)
+            setIsSave(prev=>!prev)
             Notify.success(' Updated car');
             setCars(prevCars => prevCars.map(car => (car.id === updateCar.id ? updateCar : car)));
-            // reset({ ...data })
         } catch (err) {
             console.log(err.message);
         } finally {
@@ -117,15 +111,15 @@ export const CarForm = ({setIsLoading}) => {
                 <form id='cars-form' className={styles.form} onSubmit={handleSubmit(carsFormSubmit)}>
 
                     <Label value="Brand:" type="text" nameLabel="brand" errors={errors} register={register}
-                           valueInput={updateCar?.brand || ''}
+                           valueInput={ isSave? '':  updateCar?.brand || ''}
                            onChange={(e) => setUpdateCar({...updateCar, brand: e.target.value})}
                     />
                     <Label value="Price:" type="number" nameLabel="price" errors={errors} register={register}
-                           valueInput={updateCar?.price || ''}
+                           valueInput={isSave? '': updateCar?.price || ''}
                            onChange={(e) => setUpdateCar({...updateCar, price: e.target.value})}
                     />
                     <Label value="Year:" type="number" nameLabel="year" errors={errors} register={register}
-                           valueInput={updateCar?.year || ''}
+                           valueInput={isSave? '': updateCar?.year || ''}
                            onChange={(e) => setUpdateCar({...updateCar, year: e.target.value})}
                     />
 
@@ -140,10 +134,10 @@ export const CarForm = ({setIsLoading}) => {
 
             <div>
                 {cars && <Cars cars={cars}
-                               fetchCar={fetchCar}
                                updateCar={handleGetId}
                                setIsCarUpdate={setIsCarUpdate}
                                setIsLoading={setIsLoading}
+                               setIsSave={setIsSave}
                 />}
             </div>
         </>

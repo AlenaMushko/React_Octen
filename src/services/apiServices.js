@@ -9,7 +9,6 @@ const jsonplaceholderAxios = axios.create({
 // axios.defaults.baseURL = JSONPLACEHOLDER_BASEURL;
 
 export const postUser = async (user) => {
-    console.log(JSONPLACEHOLDER_BASEURL)
     try {
         const {data} = await jsonplaceholderAxios.post(Endpoints.USERS,
             user, {
