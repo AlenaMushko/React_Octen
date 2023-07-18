@@ -6,6 +6,7 @@ import styles from './UsersForm.module.css';
 import { UsersValidators} from "../../validators";
 import {Label} from "../Label/Label";
 import {Btn} from "../Btn/Btn";
+import {postUser} from "../../services/apiServices";
 
 export const UsersForm = ({ setIsLoading}) => {
     const {
@@ -17,8 +18,13 @@ export const UsersForm = ({ setIsLoading}) => {
         mode: 'all',
         resolver: joiResolver(UsersValidators)
     })
-    const formSubmit = (data) => {
+    const formSubmit = async (data) => {
         setIsLoading(true);
+
+            // const user = await  postUser(data)
+            // console.log(user)
+
+
 
         fetch('http://jsonplaceholder.typicode.com/users', {
             method: 'POST',

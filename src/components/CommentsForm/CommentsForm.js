@@ -7,6 +7,7 @@ import myStyles from './CommentsForm.module.css';
 import {CommentsValidators} from "../../validators";
 import {Label} from "../Label/Label";
 import {Btn} from "../Btn/Btn";
+import {postComment} from "../../services/apiServices";
 
 export const CommentsForm = ({ setIsLoading}) => {
     const {
@@ -19,30 +20,38 @@ export const CommentsForm = ({ setIsLoading}) => {
         resolver:joiResolver(CommentsValidators)
     })
 
-    const formSubmit = (data) => {
+    const formSubmit = async (data) => {
         const requestData = {
             ...data,
             id: 1
         };
-        setIsLoading(true);
-        fetch('http://jsonplaceholder.typicode.com/comments', {
-            method: 'POST',
-            body: JSON.stringify(requestData)
-        })
-            .then(value => {
-                if (!value.ok) {
-                    throw  Error(value.status)
-                }
-                return value.json()
-            })
-            .then(data => {
-                reset();
-                console.log(data)
-            })
-            .catch(err => console.log(err))
-            .finally(()=>{
-                setIsLoading(false);
-            });
+        // setIsLoading(true);
+
+        try{
+           const comment = await postComment(requestData)
+            console.log(comment)
+        } catch (e) {
+
+        }
+
+        // fetch('http://jsonplaceholder.typicode.com/comments', {
+        //     method: 'POST',
+        //     body: JSON.stringify(requestData)
+        // })
+        //     .then(value => {
+        //         if (!value.ok) {
+        //             throw  Error(value.status)
+        //         }
+        //         return value.json()
+        //     })
+        //     .then(data => {
+        //         reset();
+        //         console.log(data)
+        //     })
+        //     .catch(err => console.log(err))
+        //     .finally(()=>{
+        //         setIsLoading(false);
+        //     });
 
         Notify.success(' Added comment');
     };
