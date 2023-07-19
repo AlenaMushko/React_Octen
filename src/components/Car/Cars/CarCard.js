@@ -1,7 +1,7 @@
-import myStyles from "../components/Car/Cars/Cars.module.css";
-import styles from "../components/UsersForm/UsersForm.module.css";
+import myStyles from "./Cars.module.css";
+import styles from "../../UsersForm/UsersForm.module.css";
 
-const CarCard = ({car, setIsCarUpdate, updateCar, handleDelete}) => {
+const CarCard = ({car,setUpdateCar, handleDelete}) => {
     return (
         <li key={car.id} className={myStyles.car_item}>
             <p><b>Brand:</b>{car.brand}</p>
@@ -9,10 +9,7 @@ const CarCard = ({car, setIsCarUpdate, updateCar, handleDelete}) => {
             <p><b>Year:</b>{car.year}</p>
             <div className={myStyles.car_btb}>
                 <button className={styles.btn}
-                        onClick={() => {
-                            setIsCarUpdate(true);
-                            updateCar(car)
-                        }}>Update
+                        onClick={() => setUpdateCar(car)}>Update
                 </button>
                 <button className={styles.btn}
                         onClick={() => handleDelete(car.id)}

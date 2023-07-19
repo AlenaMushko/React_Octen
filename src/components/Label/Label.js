@@ -7,7 +7,7 @@ export const Label = ({value, type, nameLabel, errors, register, valueInput, onC
             <input type={type}
                    {...register(nameLabel, {required: true})}
                    className={styles.form_input}
-                   value={valueInput}
+                   defaultValue={valueInput}
                    onChange={onChange}
             />
             {errors[nameLabel] && <span>{errors[nameLabel].message}
