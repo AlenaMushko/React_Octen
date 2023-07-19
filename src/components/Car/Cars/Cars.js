@@ -26,14 +26,14 @@ export const Cars = ({setUpdateCar,  setIsLoading, setIsSave, isSave}) => {
             .then(data => {
                 setCars(data);
             });
-    }, [fetchCar()]);
+    }, []);
 
     useEffect(() => {
         fetchCar()
             .then(data => {
                 setCars(data);
             });
-    }, [isSave, fetchCar()]);
+    }, [isSave]);
 
     const handleDelete = async (idCar) => {
         setIsLoading(true);

@@ -61,7 +61,7 @@ export const CarForm = ({setIsLoading, setUpdateCar, setIsSave, updateCar}) => {
             setValue('price', updateCar.price, {shouldValidate: true})
             setValue('year', updateCar.year, {shouldValidate: true})
         }
-    }, [updateCar, setValue()])
+    }, [updateCar])
 
     const handleUpdate = async (data, idCar) => {
         setIsLoading(true);
