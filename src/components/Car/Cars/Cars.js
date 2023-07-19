@@ -12,8 +12,8 @@ export const Cars = ({setUpdateCar,  setIsLoading, setIsSave, isSave}) => {
         setIsLoading(true);
 
         try {
-            const cars = await getCar();
-            return cars;
+            const newCars = await getCar();
+            return newCars;
         } catch (err) {
             console.log(err.message);
         } finally {
@@ -26,14 +26,14 @@ export const Cars = ({setUpdateCar,  setIsLoading, setIsSave, isSave}) => {
             .then(data => {
                 setCars(data);
             });
-    }, []);
+    }, [fetchCar()]);
 
     useEffect(() => {
         fetchCar()
             .then(data => {
                 setCars(data);
             });
-    }, [isSave]);
+    }, [isSave, fetchCar()]);
 
     const handleDelete = async (idCar) => {
         setIsLoading(true);
