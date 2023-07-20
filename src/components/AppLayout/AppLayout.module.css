@@ -1,0 +1,12 @@
+.header {
+    width: 100vw;
+    padding: 8px;
+    background-color: orange;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
