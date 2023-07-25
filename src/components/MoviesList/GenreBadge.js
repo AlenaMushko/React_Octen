@@ -1,8 +1,8 @@
 
-export const GenreBadge = () => {
+export const GenreBadge = ({genre}) => {
     return (
         <div>
-            GenreBadge
+
         </div>
     );
 };

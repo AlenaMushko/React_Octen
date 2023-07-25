@@ -1,15 +1,25 @@
-import { Rings } from 'react-loader-spinner';
+import  { useContext } from 'react';
+import { LoaderContext } from '../routing/LoaderProvider';
+import {AbsoluteCenter, Box, Spinner} from '@chakra-ui/react';
 
-export const Loader = () => (
-        <Rings
-            height="80"
-            width="80"
-            color="rgba(72, 61, 139, 0.69)"
-            radius={6}
-            wrapperStyle={{ justifyContent: 'center', alignItems: 'center' }}
-            wrapperClass=""
-            visible={true}
-            ariaLabel="rings-loading"
-        />
+const Loader = () => {
+    const { isLoading } = useContext(LoaderContext);
+
+    return (
+        <>
+            {isLoading && (
+                <Box position='relative' h='100px'>
+                    <AbsoluteCenter  axis='both'>
+                        <Spinner thickness='4px'
+                                 speed='0.65s'
+                                 emptyColor='gray.200'
+                                 color='blue.500'
+                                 size='xl' />
+                    </AbsoluteCenter>
+                </Box>
+            )}
+        </>
     );
+};
 
+export { Loader };

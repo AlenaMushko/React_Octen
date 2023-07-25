@@ -1,9 +1,14 @@
+import ReactStars from 'react-stars';
 
-export const StarsRating = () => {
+export const StarsRating = ({stars}) => {
+    const rating = Math.round(stars / 2);
+
     return (
-        <div>
-            StarsRating
-        </div>
+        <ReactStars
+            count={5}
+            value={rating}
+            size={18}
+            color2={'#ffd700'}
+        />
     );
 };
-

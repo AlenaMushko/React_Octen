@@ -3,7 +3,7 @@ export const AppRoutes = {
     MOVIE_ID: "/:movieId",
     POPULAR:'/popular',
     REVENUE:'/revenue',
-    ANIMATION:'animation',
+    ANIMATION:'/animation',
 }
 
 

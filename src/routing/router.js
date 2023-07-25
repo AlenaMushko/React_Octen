@@ -31,10 +31,10 @@ export const router = createBrowserRouter([
                 path: AppRoutes.ANIMATION,
                 element: <AnimationPage/>,
             },
-            {
-                path: "*",
-                element: <Error />,
-            },
         ]
-    }
+    },
+    {
+        path: "*",
+        element: <Error />,
+    },
 ]);

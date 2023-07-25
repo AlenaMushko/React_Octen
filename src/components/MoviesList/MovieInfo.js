@@ -1,10 +1,9 @@
 
-export const MovieInfo = () => {
+export const MovieInfo = ({description, label, adult, title, originalLanguage}) => {
     return (
         <div>
-            MovieInfo
+
         </div>
     );
 };
 
-// contains label, description, badges

@@ -1,4 +1,4 @@
 export {Error} from './Error/Error';
-export {AppLayout} from './AppLayout/AppLayout';
-export {Container} from './Container/Container';
+export {AppLayout} from './AppLayout';
 export {MoviesList} from './MoviesList/index';
+export {ScrollToTopButton} from './ScrollToTopButton/ScrollToTopButton';
