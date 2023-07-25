@@ -1,3 +1,2 @@
-export {todosService} from './todosServices';
-export {albumsService} from './albumsServices';
-export {commentsService} from './commentsServices';
+export {moviesService} from './moviesService';
+export {genresService} from './genresService';

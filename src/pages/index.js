@@ -1,4 +1,6 @@
-export {TodosPage} from './TodosPage';
-export {AlbumsPage} from './AlbumsPage';
-export {CommentsPage} from './CommentsPage';
-export {CommentIdPage} from './CommentIdPage';
+export {MoviesPage} from './MoviesPage';
+export {MovieIdPage} from './MovieIdPage';
+export {PopularPage} from './PopularPage';
+export {RevenuePage} from './RevenuePage';
+export {AnimationPage} from './AnimationPage';
+

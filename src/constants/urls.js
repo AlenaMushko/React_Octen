@@ -1,23 +1,27 @@
-const baseURL = 'https://jsonplaceholder.typicode.com'
+const baseURL = 'https://api.themoviedb.org/3/';
+const KEY = '8d41be39d2696eeff12b89d916a6c984';
+const api_key = `?api_key=${KEY}`;
 
-const todos = '/todos';
-const comments = '/comments';
-const albums = '/albums';
+const movies = '/movies';
+const genres = '/genres';
+
+// const comments = '/comments';
 
 const urls = {
-    todos: {
-        base: todos,
+    movies : {
+        base: movies,
     },
-    albums: {
-        base: albums,
+    genres : {
+        base: genres,
     },
-    comments: {
-        base: comments,
-        byId: (id) => `${comments}/${id}`
-    }
+    // comments: {
+    //     base: comments,
+    //     byId: (id) => `${comments}/${id}`
+    // }
 }
 
 export {
     baseURL,
-    urls
+    api_key,
+    urls,
 }

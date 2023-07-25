@@ -1,10 +1,11 @@
 import * as React from "react";
 import {createBrowserRouter,} from "react-router-dom";
 
-import {AlbumsPage, CommentIdPage, CommentsPage, TodosPage} from "../pages";
-import {AppLayout} from "../components";
+import {AnimationPage,
+    // MovieIdPage,
+    MoviesPage, PopularPage, RevenuePage} from "../pages";
+import {AppLayout, Error} from "../components";
 import {AppRoutes} from "./appRoutes";
-import Error from "../components/Error/Error";
 
 export const router = createBrowserRouter([
     {
@@ -12,29 +13,23 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: AppRoutes.HOME,
-                element: (
-                    <div>
-                        <h1 style={{color: "orange"}}>Hello, welcom to my home work</h1>
-                    </div>
-                ),
+                element: <MoviesPage/>,
+            },
+            // {
+            //     path: AppRoutes.MOVIE_ID,
+            //     element: <MovieIdPage/>,
+            // },
+            {
+                path: AppRoutes.POPULAR,
+                element: <PopularPage/>,
             },
             {
-                path: AppRoutes.ALBUMS,
-                element: <AlbumsPage/>,
+                path: AppRoutes.REVENUE,
+                element: <RevenuePage/>,
             },
             {
-                path: AppRoutes.TODOS,
-                element: <TodosPage/>,
-            },
-            {
-                path: AppRoutes.COMMENTS,
-                element: <CommentsPage/>,
-                children: [
-                    {
-                        path: AppRoutes.COMMENT_ID,
-                        element: <CommentIdPage/>,
-                    },
-                ]
+                path: AppRoutes.ANIMATION,
+                element: <AnimationPage/>,
             },
             {
                 path: "*",

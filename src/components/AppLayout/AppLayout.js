@@ -12,19 +12,19 @@ export const AppLayout = () => {
     const links = [
         {
             path: AppRoutes.HOME,
-            label: 'Home'
+            label: 'All Movies'
         },
         {
-            path: AppRoutes.ALBUMS,
-            label: 'Albums'
+            path: AppRoutes.POPULAR,
+            label: 'Popular Movies'
         },
         {
-            path: AppRoutes.TODOS,
-            label: 'Todos'
+            path: AppRoutes.REVENUE,
+            label: 'Revenue Movies'
         },
         {
-            path: AppRoutes.COMMENTS,
-            label: 'Comments'
+            path: AppRoutes.ANIMATION,
+            label: 'Animation Movies'
         }
     ]
     const {pathname} = useLocation();
