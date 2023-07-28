@@ -1,5 +1,6 @@
-import userImg from '../img/user.jpeg';
 import { Box, Image, Text} from "@chakra-ui/react";
+
+import userImg from '../img/user.jpeg';
 
 export const UserInfo = () => {
     const userNick = 'Alona';

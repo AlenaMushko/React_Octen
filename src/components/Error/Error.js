@@ -14,8 +14,10 @@ export const Error = () => {
             <Link to={AppRoutes.HOME} style={{textDecoration: 'none'}}>
                 <Button colorScheme={theme.colors.border} variant="outline"
                         margin='30px 0'
-                        _hover={{backgroundColor: 'rgba(230, 48, 77, 0.87)',
-                            color: 'theme.colors.secondary'}}>
+                        _hover={{
+                            backgroundColor: 'rgba(230, 48, 77, 0.87)',
+                            color: 'theme.colors.secondary'
+                        }}>
                     <Box marginRight="12px"><RxExit/></Box> Go to home page
                 </Button>
             </Link>

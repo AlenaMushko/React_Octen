@@ -57,7 +57,7 @@ export const MovieDescription = ({
                     </Text>
                 </Flex>
 
-                <TableContainer  mb={5}>
+                <TableContainer mb={5}>
                     <Table variant='simple'>
                         <Tbody>
                             <Tr>

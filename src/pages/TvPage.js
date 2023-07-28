@@ -33,7 +33,7 @@ export const TvPage = () => {
     return (
         <>
             <MoviesList data={tvs} pageType={'tv'} backLinkHref={backLinkHref}/>
-            <Pagination  page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+            <Pagination page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
         </>
-);
+    );
 };

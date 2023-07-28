@@ -73,7 +73,7 @@ export const MoviesPage = () => {
             <Outlet/>
             {notMovie && <NotMovies searchQuery={searchQuery}/>}
             <MoviesList data={movies} pageType={'movies'} backLinkHref={backLinkHref}/>
-            <Pagination  page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+            <Pagination page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
         </>
     );
 };

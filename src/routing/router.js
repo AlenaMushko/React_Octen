@@ -1,11 +1,7 @@
 import * as React from "react";
 import {createBrowserRouter,} from "react-router-dom";
 
-import {
-    AnimationPage,
-    MovieIdPage,
-    MoviesPage, SoonPage, TvPage
-} from "../pages";
+import {AnimationPage, MovieIdPage, MoviesPage, SoonPage, TvPage} from "../pages";
 import {Header, Error} from "../components";
 import {AppRoutes} from "./appRoutes";
 
@@ -37,6 +33,6 @@ export const router = createBrowserRouter([
     },
     {
         path: "*",
-        element: <Error />,
+        element: <Error/>,
     },
 ]);

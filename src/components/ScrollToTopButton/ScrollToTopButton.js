@@ -32,12 +32,15 @@ export const ScrollToTopButton = () => {
         padding: '10px',
         cursor: 'pointer',
         fontSize: '30px',
-        display: isVisible ? 'block' : 'none',
+        display: isVisible ? 'flex' : 'none',
+        justifyContent: 'center',
+        alignItems: 'center',
         transition: 'background-color 300ms',
     };
 
     return (
-        <ArrowBtn isActive={isVisible}  arrow={<PiArrowFatLinesUp style={{fontSize: 30}}/>} styles={buttonStyles} onClick={scrollToTop}/>
+        <ArrowBtn isActive={isVisible} arrow={<PiArrowFatLinesUp style={{fontSize: 30}}/>} styles={buttonStyles}
+                  onClick={scrollToTop}/>
     );
 };
 

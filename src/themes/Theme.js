@@ -8,8 +8,6 @@ const lightTheme = extendTheme({
         headerBG: "rgb(240, 212, 58)",
         headerBtn: "rgb(34, 178, 218)",
         basicText: "#22559c",
-
-
     },
 });
 
@@ -20,7 +18,6 @@ const darkTheme = extendTheme({
         error:"rgba(230, 48, 77, 0.87)",
         headerBG: "#3b4a6b",
         headerBtn: "#22b2da",
-
     },
 });
 

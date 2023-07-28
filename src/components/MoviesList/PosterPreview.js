@@ -1,5 +1,6 @@
-import {StarsRating} from "./StarsRating";
 import {Box, Image} from "@chakra-ui/react";
+
+import {StarsRating} from "./StarsRating";
 
 export const PosterPreview = ({stars, posterPath, adult, title, secondTitle}) => {
     const cardSRC = `https://image.tmdb.org/t/p/w500${posterPath}`;

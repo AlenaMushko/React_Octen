@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom';
+import {useEffect} from "react";
 import {Card, CardBody, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
 
 import {PosterPreview} from "./PosterPreview";
 import {GenreBadge} from "./GenreBadge";
 import {AppRoutes} from "../../routing/appRoutes";
-import {useEffect} from "react";
 
 export const MoviesListCard = ({item, pageType, backLinkHref}) => {
     const {
@@ -41,7 +41,7 @@ export const MoviesListCard = ({item, pageType, backLinkHref}) => {
             <Link
                 to={{
                     pathname: linkToUse,
-                    state: { backLinkHref }, // Передаємо backLinkHref як стан
+                    state: {backLinkHref}, // Передаємо backLinkHref як стан
                 }}
                 // to={linkToUse}
             >

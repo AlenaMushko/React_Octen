@@ -8,7 +8,7 @@ import {MovieDescription} from "./MovieDescription";
 
 export const MovieInfo = ({movieId}) => {
 
-        const {setIsLoading} = useContext(LoaderContext);
+    const {setIsLoading} = useContext(LoaderContext);
     const [movie, setMovie] = useState({});
 
     useEffect(() => {

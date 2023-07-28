@@ -31,11 +31,13 @@ export const GenreBadge = ({genre}) => {
     let filmGenres = null;
     if (filmGenreId.length > 2) {
         filmGenres = filmGenreId.slice(0, 2).join(', ');
-    } else{filmGenres =filmGenreId.join(', ')}
+    } else {
+        filmGenres = filmGenreId.join(', ')
+    }
 
     return (
         <Box>
-            <Text >{filmGenres || ''}</Text>
+            <Text>{filmGenres || ''}</Text>
         </Box>
     );
 };

@@ -31,8 +31,8 @@ export const AnimationPage = () => {
     return (
         <>
             <MoviesList pageType={'animation'} data={animation} backLinkHref={backLinkHref}/>
-            <Pagination  page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+            <Pagination page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
         </>
-);
+    );
 };
 

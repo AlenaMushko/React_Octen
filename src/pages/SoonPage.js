@@ -1,9 +1,9 @@
 import {useContext, useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 
 import {LoaderContext} from "../routing/LoaderProvider";
 import {moviesService} from "../services";
 import {MoviesList, Pagination} from "../components";
-import {useLocation} from "react-router-dom";
 
 export const SoonPage = () => {
     const {setIsLoading} = useContext(LoaderContext);
@@ -30,7 +30,7 @@ export const SoonPage = () => {
     return (
         <>
             <MoviesList pageType={'popular'} data={populars} backLinkHref={backLinkHref}/>
-            <Pagination  page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+            <Pagination page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
         </>
     );
 };

@@ -6,9 +6,9 @@ import {ArrowBtn} from "../ArrowBtn";
 import {PageNumbers} from "./PageNumbers";
 
 
-export const Pagination = ({page,  totalPages, setCurrentPage}) => {
+export const Pagination = ({page, totalPages, setCurrentPage}) => {
     const [myPage, setMyPage] = useState(page);
-    let showPages = totalPages >500?  500 :  totalPages;
+    let showPages = totalPages > 500 ? 500 : totalPages;
 
     useEffect(() => {
         setMyPage(page)

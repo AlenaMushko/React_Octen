@@ -13,7 +13,7 @@ root.render(
     <React.StrictMode>
         <ThemeProvider>
             <ChakraProvider>
-                <ColorModeScript />
+                <ColorModeScript/>
                 <LoaderProvider>
                     <RouterProvider router={router}/>
                 </LoaderProvider>

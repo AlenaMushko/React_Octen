@@ -3,12 +3,10 @@ import {Link, useLocation, Outlet} from 'react-router-dom';
 import {ChakraProvider, Flex} from "@chakra-ui/react";
 import {Container, Box, HStack} from '@chakra-ui/react'
 
-
 import {LoaderContext} from "../routing/LoaderProvider";
 import {Loader} from "./Loader";
 import {AppRoutes} from '../routing/appRoutes';
 import {ScrollToTopButton} from "./ScrollToTopButton/ScrollToTopButton";
-
 import {ThemeContext, darkTheme, lightTheme, ThemeSwitcher} from "../themes";
 import {UserInfo} from "./UserInfo";
 
