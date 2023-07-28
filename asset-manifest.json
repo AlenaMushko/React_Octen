@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/React_Octen/static/css/main.676967bc.css",
-    "main.js": "/React_Octen/static/js/main.2317cd09.js",
+    "main.js": "/React_Octen/static/js/main.f2c3fd7f.js",
     "static/media/user.jpeg": "/React_Octen/static/media/user.748642519369440c5421.jpeg",
     "static/media/error.webp": "/React_Octen/static/media/error.b57361c93805a88119bf.webp",
     "index.html": "/React_Octen/index.html",
     "main.676967bc.css.map": "/React_Octen/static/css/main.676967bc.css.map",
-    "main.2317cd09.js.map": "/React_Octen/static/js/main.2317cd09.js.map"
+    "main.f2c3fd7f.js.map": "/React_Octen/static/js/main.f2c3fd7f.js.map"
   },
   "entrypoints": [
     "static/css/main.676967bc.css",
-    "static/js/main.2317cd09.js"
+    "static/js/main.f2c3fd7f.js"
   ]
 }
