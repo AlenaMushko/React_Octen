@@ -1,8 +1,9 @@
 export const AppRoutes = {
     HOME:  "/",
-    MOVIE_ID: "/:movieId",
-    POPULAR:'/popular',
-    REVENUE:'/revenue',
+    MOVIE:'/movie',
+    MOVIE_ID: "/movie/:movieId",
+    SOON:'/soon',
+    TV:'/tv',
     ANIMATION:'/animation',
 }
 

@@ -15,7 +15,7 @@ const lightTheme = extendTheme({
 
 const darkTheme = extendTheme({
     colors: {
-        border: "rgba(48, 73, 230, 0.05)",
+        border: "rgb(253, 253, 253)",
         secondary: "#F0F0F0",
         error:"rgba(230, 48, 77, 0.87)",
         headerBG: "#3b4a6b",

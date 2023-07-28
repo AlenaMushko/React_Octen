@@ -1,15 +1,18 @@
 import {MoviesListCard} from "./MoviesListCard";
-import {Container, SimpleGrid} from "@chakra-ui/react";
+import {Box, Flex, SimpleGrid} from "@chakra-ui/react";
 
-export const MoviesList = ({movies}) => {
+export const MoviesList = ({data, pageType, backLinkHref}) => {
+
     return (
-        <Container py={10}>
-            <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing='2vw'>
-            {movies?.map(movie=>(
-                <MoviesListCard key={movie.id} movie={movie} />
-            ))}
-            </SimpleGrid>
-        </Container>
+        <Box py={10}>
+            <Flex justifyContent="center" alignItems="center" >
+                <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing="8vw">
+                    {data?.map((item) => (
+                        <MoviesListCard key={item.id} item={item} pageType={pageType} backLinkHref={backLinkHref} />
+                    ))}
+                </SimpleGrid>
+            </Flex>
+        </Box>
     );
 };
 

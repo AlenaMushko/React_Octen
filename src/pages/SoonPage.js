@@ -1,22 +1,23 @@
 import {useContext, useEffect, useState} from "react";
+
 import {LoaderContext} from "../routing/LoaderProvider";
 import {moviesService} from "../services";
 import {MoviesList} from "../components";
 import {useLocation} from "react-router-dom";
 
-export const AnimationPage = () => {
+export const SoonPage = () => {
     const {setIsLoading} = useContext(LoaderContext);
     const [currentPage, setCurrentPage] = useState(1);
-    const [animation, setAnimation] = useState([]);
+    const [populars, setPopulars] = useState([]);
 
     const location = useLocation();
     const backLinkHref = location.pathname ?? '/';
 
     useEffect(() => {
         setIsLoading(true);
-        moviesService.getAnimation(currentPage)
+        moviesService.getSoon(currentPage)
             .then((res) => {
-                setAnimation(res.data.results);
+                setPopulars(res.data.results);
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -24,9 +25,8 @@ export const AnimationPage = () => {
             })
             .finally(setIsLoading(false));
     }, [currentPage, setIsLoading]);
-
     return (
-      <MoviesList pageType={'animation'} data={animation} backLinkHref={backLinkHref}/>
+      <MoviesList pageType={'popular'} data={populars} backLinkHref={backLinkHref}/>
     );
 };
 

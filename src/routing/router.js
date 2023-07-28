@@ -1,31 +1,33 @@
 import * as React from "react";
 import {createBrowserRouter,} from "react-router-dom";
 
-import {AnimationPage,
-    // MovieIdPage,
-    MoviesPage, PopularPage, RevenuePage} from "../pages";
-import {AppLayout, Error} from "../components";
+import {
+    AnimationPage,
+    MovieIdPage,
+    MoviesPage, SoonPage, TvPage
+} from "../pages";
+import {Header, Error} from "../components";
 import {AppRoutes} from "./appRoutes";
 
 export const router = createBrowserRouter([
     {
-        element: <AppLayout/>,
+        element: <Header/>,
         children: [
             {
                 path: AppRoutes.HOME,
                 element: <MoviesPage/>,
             },
-            // {
-            //     path: AppRoutes.MOVIE_ID,
-            //     element: <MovieIdPage/>,
-            // },
             {
-                path: AppRoutes.POPULAR,
-                element: <PopularPage/>,
+                path: AppRoutes.MOVIE_ID,
+                element: <MovieIdPage/>,
             },
             {
-                path: AppRoutes.REVENUE,
-                element: <RevenuePage/>,
+                path: AppRoutes.SOON,
+                element: <SoonPage/>,
+            },
+            {
+                path: AppRoutes.TV,
+                element: <TvPage/>,
             },
             {
                 path: AppRoutes.ANIMATION,

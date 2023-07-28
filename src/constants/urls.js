@@ -1,18 +1,36 @@
-const baseURL = 'https://api.themoviedb.org/3/discover';
+const baseURL = 'https://api.themoviedb.org/3';
 const KEY = '8d41be39d2696eeff12b89d916a6c984';
+
 
 const api_key = `?api_key=${KEY}`;
 
-const movie = '/movie';
-const genres = '/genres';
+const movie = '/discover/movie';
+const movieById = '/movie';
+const genre = '/genre/movie/list';
+const soon = '/movie/upcoming';
+const tv = `discover/tv`;
+const search = `search/movie`;
 
 const urls = {
-    movies : {
+    movies: {
         base: movie,
+
     },
-    genres : {
-        base: genres,
-    }
+    genres: {
+        base: genre,
+    },
+    movieById: {
+        base: movieById,
+    },
+    soon: {
+        base: soon,
+    },
+    tv: {
+        base: tv,
+    },
+    search: {
+        base: search,
+    },
 }
 
 export {

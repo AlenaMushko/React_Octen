@@ -1,7 +1,7 @@
 import {StarsRating} from "./StarsRating";
 import {Box, Image} from "@chakra-ui/react";
 
-export const PosterPreview = ({stars, posterPath, adult, title}) => {
+export const PosterPreview = ({stars, posterPath, adult, title, secondTitle}) => {
     const cardSRC = `https://image.tmdb.org/t/p/w500${posterPath}`;
     const notPoster = 'https://image.tmdb.org/t/p/w500/uc4RAVW1T3T29h6OQdr7zu4Blui.jpg';
     return (
@@ -9,22 +9,22 @@ export const PosterPreview = ({stars, posterPath, adult, title}) => {
             {posterPath
                 ? <Image
                     src={cardSRC}
-                    alt={title}
+                    alt={title || secondTitle || ''}
                     w="100%"
                     borderTopLeftRadius="lg"
                     borderTopRightRadius="lg"
                 />
                 : <Image
                     src={notPoster}
-                    alt={title || 'Film poster'}
+                    alt={title || secondTitle || 'Film poster'}
                     w="100%"
                     borderTopLeftRadius="lg"
                     borderTopRightRadius="lg"
                 />}
-            {!adult && <Box
+            {adult && <Box
                 position="absolute"
-                top="3%"
-                left="90%"
+                top="5%"
+                left="88%"
                 transform="translate(-50%, -50%)"
                 backgroundColor="rgb(240, 212, 58)"
                 borderRadius="50%"
@@ -34,8 +34,8 @@ export const PosterPreview = ({stars, posterPath, adult, title}) => {
             </Box>}
             {stars && <Box
                 position="absolute"
-                top="3%"
-                left="23%"
+                top="4%"
+                left="25%"
                 transform="translate(-50%, -50%)"
             >
                 <StarsRating stars={stars}/>

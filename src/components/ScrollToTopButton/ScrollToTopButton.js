@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {PiArrowFatLinesUp} from 'react-icons/pi';
 
-import styles from './ScrollToTopButton.module.css';
+import {ArrowBtn} from "../ArrowBtn";
 
 export const ScrollToTopButton = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -24,13 +24,20 @@ export const ScrollToTopButton = () => {
         };
     }, []);
 
+    const buttonStyles = {
+        position: 'fixed',
+        bottom: '16vh',
+        right: '3vw',
+        borderRadius: '8px',
+        padding: '10px',
+        cursor: 'pointer',
+        fontSize: '30px',
+        display: isVisible ? 'block' : 'none',
+        transition: 'background-color 300ms',
+    };
+
     return (
-        <button
-            className={`${styles.scrollToTopButton} ${isVisible ? styles.visible : ''}`}
-            onClick={scrollToTop}
-        >
-            <PiArrowFatLinesUp style={{fontSize: 30}}/>
-        </button>
+        <ArrowBtn  arrow={<PiArrowFatLinesUp style={{fontSize: 30}}/>} styles={buttonStyles} onClick={scrollToTop}/>
     );
 };
 

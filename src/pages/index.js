@@ -1,6 +1,6 @@
 export {MoviesPage} from './MoviesPage';
 export {MovieIdPage} from './MovieIdPage';
-export {PopularPage} from './PopularPage';
-export {RevenuePage} from './RevenuePage';
+export {SoonPage} from './SoonPage';
+export {TvPage} from './TvPage';
 export {AnimationPage} from './AnimationPage';
 

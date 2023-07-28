@@ -1,25 +1,34 @@
-import {PosterPreview} from "./PosterPreview";
-import {MovieInfo} from "./MovieInfo";
-import {GenreBadge} from "./GenreBadge";
-import {Card, CardBody, Flex, Heading, Spacer,  Text} from "@chakra-ui/react";
+import {Link} from 'react-router-dom';
+import {Card, CardBody, Flex, Heading, Spacer, Text} from "@chakra-ui/react";
 
-export const MoviesListCard = ({movie}) => {
-    console.log(movie)
+import {PosterPreview} from "./PosterPreview";
+import {GenreBadge} from "./GenreBadge";
+import {AppRoutes} from "../../routing/appRoutes";
+import {useEffect} from "react";
+
+export const MoviesListCard = ({item, pageType, backLinkHref}) => {
     const {
         adult,
         backdrop_path,
         genre_ids,
         id,
-        original_language,
-        overview,
         poster_path,
         release_date,
-        title,
-        video,
+        title, original_title,
         vote_average,
-    } = movie;
+    } = item;
 
-    const releaseDate = release_date.slice(0, 4);
+    let releaseDate = '';
+    if (release_date) {
+        releaseDate = release_date.slice(0, 4);
+    }
+
+    const movieLink = `${AppRoutes.MOVIE}/${id}`;
+    const linkToUse = pageType === "tv" ? "/tv" : movieLink;
+
+    useEffect(() => {
+        localStorage.setItem('backLinkHref', backLinkHref);
+    }, [backLinkHref]);
 
     return (
         <Card
@@ -29,24 +38,27 @@ export const MoviesListCard = ({movie}) => {
                 boxShadow: "0px 8px 43px rgba(34, 178, 218, 0.7)",
             }}
         >
-            <PosterPreview backdropPath={backdrop_path} posterPath={poster_path} stars={vote_average} title={title}
-                           adult={adult}/>
-            <CardBody>
-
-                <GenreBadge genre={genre_ids}/>
-
+            <Link
+                to={{
+                    pathname: linkToUse,
+                    state: { backLinkHref }, // Передаємо backLinkHref як стан
+                }}
+                // to={linkToUse}
+            >
+                <PosterPreview backdropPath={backdrop_path} posterPath={poster_path} stars={vote_average}
+                               secondTitle={original_title} title={title}
+                               adult={adult}/>
+                <CardBody>
+                    <Heading size="md">{title || original_title || ''}</Heading>
                     <Flex alignItems="baseline" spacing='6'>
-                        <Heading size="md">{title}</Heading>
-                        <Spacer />
+                        <GenreBadge genre={genre_ids}/>
+                        <Spacer/>
                         <Text fontSize="l" pl={4} color="gray.400">
-                            {releaseDate}
+                            {releaseDate || ''}
                         </Text>
                     </Flex>
-            </CardBody>
-
-
-            <MovieInfo title={title} description={overview} label={backdrop_path} adult={adult}
-                       originalLanguage={original_language}/>
+                </CardBody>
+            </Link>
         </Card>
     );
 };

@@ -1,9 +1,9 @@
 import  { createContext, useState } from 'react';
 
-const ThemeContext = createContext();
+const ThemeContext = createContext('dark');
 
 const ThemeProvider = ({ children }) => {
-    const [isDark, setIsDark] = useState(false);
+    const [isDark, setIsDark] = useState(true);
 
     const toggleTheme = () => {
         setIsDark(prevTheme => !prevTheme);
