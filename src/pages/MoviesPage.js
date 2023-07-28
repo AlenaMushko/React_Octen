@@ -4,6 +4,7 @@ import {useContext, useState, useEffect} from "react";
 import {MoviesList, Pagination, SearchMovies} from "../components";
 import {LoaderContext} from "../routing/LoaderProvider";
 import {moviesService} from "../services";
+import {NotMovies} from "../components/NotMovies";
 
 export const MoviesPage = () => {
     const {setIsLoading} = useContext(LoaderContext);
@@ -12,22 +13,34 @@ export const MoviesPage = () => {
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [inputValue, setInputValue] = useState('');
-    let moviesLength=movies.length;
+    const [isSearch, setIsSearch] = useState(false);
+    const [notMovie, setNotMovie] = useState(false);
 
     const location = useLocation();
     const backLinkHref = location.pathname ?? '/';
+
+    useEffect(() => {
+        if (isSearch === true) {
+            setCurrentPage(1);
+        }
+    }, [isSearch])
 
     useEffect(() => {
         if (searchQuery !== '' && searchQuery !== ' ') {
             setIsLoading(true);
             moviesService.getSearch(currentPage, searchQuery)
                 .then((res) => {
+                    setNotMovie(res.data.results.length === 0)
                     setMovies(res.data.results);
+                    setTotalPages(res.data.total_pages)
                     setIsLoading(false);
                 })
                 .catch((error) => {
                     console.error("Error fetching movies:", error);
+                })
+                .finally(() => {
                     setIsLoading(false);
+                    setIsSearch(false);
                 });
         } else {
             setIsLoading(true);
@@ -41,12 +54,12 @@ export const MoviesPage = () => {
                     console.error("Error fetching movies:", error);
                 })
                 .finally(setIsLoading(false));
-            setCurrentPage(1);
         }
     }, [currentPage, searchQuery, setIsLoading]);
 
     const handleSearch = () => {
         if (inputValue.trim() !== '') {
+            setIsSearch(true);
             setSearchQuery(inputValue.trim());
         }
         setInputValue('')
@@ -58,8 +71,9 @@ export const MoviesPage = () => {
                           inputValue={inputValue}
                           setInputValue={setInputValue}/>
             <Outlet/>
+            {notMovie && <NotMovies searchQuery={searchQuery}/>}
             <MoviesList data={movies} pageType={'movies'} backLinkHref={backLinkHref}/>
-            <Pagination moviesLength={moviesLength} page={currentPage} totalPages={totalPages}/>
+            <Pagination  page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
         </>
     );
 };

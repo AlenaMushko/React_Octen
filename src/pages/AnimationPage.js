@@ -1,13 +1,15 @@
 import {useContext, useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+
 import {LoaderContext} from "../routing/LoaderProvider";
 import {moviesService} from "../services";
-import {MoviesList} from "../components";
-import {useLocation} from "react-router-dom";
+import {MoviesList, Pagination} from "../components";
 
 export const AnimationPage = () => {
     const {setIsLoading} = useContext(LoaderContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [animation, setAnimation] = useState([]);
+    const [totalPages, setTotalPages] = useState(null);
 
     const location = useLocation();
     const backLinkHref = location.pathname ?? '/';
@@ -17,6 +19,7 @@ export const AnimationPage = () => {
         moviesService.getAnimation(currentPage)
             .then((res) => {
                 setAnimation(res.data.results);
+                setTotalPages(res.data.total_pages)
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -26,7 +29,10 @@ export const AnimationPage = () => {
     }, [currentPage, setIsLoading]);
 
     return (
-      <MoviesList pageType={'animation'} data={animation} backLinkHref={backLinkHref}/>
-    );
+        <>
+            <MoviesList pageType={'animation'} data={animation} backLinkHref={backLinkHref}/>
+            <Pagination  page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+        </>
+);
 };
 

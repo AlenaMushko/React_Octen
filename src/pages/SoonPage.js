@@ -2,13 +2,14 @@ import {useContext, useEffect, useState} from "react";
 
 import {LoaderContext} from "../routing/LoaderProvider";
 import {moviesService} from "../services";
-import {MoviesList} from "../components";
+import {MoviesList, Pagination} from "../components";
 import {useLocation} from "react-router-dom";
 
 export const SoonPage = () => {
     const {setIsLoading} = useContext(LoaderContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [populars, setPopulars] = useState([]);
+    const [totalPages, setTotalPages] = useState(null);
 
     const location = useLocation();
     const backLinkHref = location.pathname ?? '/';
@@ -18,6 +19,7 @@ export const SoonPage = () => {
         moviesService.getSoon(currentPage)
             .then((res) => {
                 setPopulars(res.data.results);
+                setTotalPages(res.data.total_pages)
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -26,7 +28,10 @@ export const SoonPage = () => {
             .finally(setIsLoading(false));
     }, [currentPage, setIsLoading]);
     return (
-      <MoviesList pageType={'popular'} data={populars} backLinkHref={backLinkHref}/>
+        <>
+            <MoviesList pageType={'popular'} data={populars} backLinkHref={backLinkHref}/>
+            <Pagination  page={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+        </>
     );
 };
 

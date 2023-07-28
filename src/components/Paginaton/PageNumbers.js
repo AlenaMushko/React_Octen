@@ -1,62 +1,57 @@
 import { Button, Flex } from "@chakra-ui/react";
+import { ArrowBtn } from "../ArrowBtn";
 
 export const PageNumbers = ({ currentPage, totalPages, onChangePage }) => {
     const pagesToShow = 3;
+    let showPages = totalPages >500?  500 :  totalPages;
+
     let startPage = Math.max(1, currentPage - 1);
-    let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+    let endPage = Math.min(showPages, startPage + pagesToShow - 1);
 
     if (endPage - startPage < pagesToShow - 1) {
         startPage = Math.max(1, endPage - pagesToShow + 1);
     }
 
-    const showEllipsisStart = startPage > 1;
-    const showEllipsisEnd = endPage < totalPages;
+    const showStart = startPage > 1;
+    const showEnd = endPage < showPages;
 
     const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
 
-    return (
-        <Flex justifyContent="center" gap="2vw">
-            {showEllipsisStart && (
-                <Button
-                    bg={currentPage === 1 ? "blue" : undefined}
-                    color={currentPage === 1 ? "white" : undefined}
-                    _hover={{ bg: "rgb(240, 212, 58)" }}
-                    onClick={() => onChangePage(1)}
-                >
-                    1
-                </Button>
-            )}
-            {showEllipsisStart && (
-                <Button bg="transparent" disabled>
-                    ...
-                </Button>
-            )}
-            {pageNumbers.map((pageNumber) => (
-                <Button
-                    key={pageNumber}
-                    bg={pageNumber === currentPage ? "blue" : undefined}
-                    color={pageNumber === currentPage ? "white" : undefined}
-                    _hover={{ bg: "rgb(240, 212, 58)" }}
-                    onClick={() => onChangePage(pageNumber)}
-                >
-                    {pageNumber}
-                </Button>
-            ))}
-            {showEllipsisEnd && (
-                <Button bg="transparent" disabled>
-                    ...
-                </Button>
-            )}
-            {showEllipsisEnd && (
-                <Button
-                    bg={currentPage === totalPages ? "blue" : undefined}
-                    color={currentPage === totalPages ? "white" : undefined}
-                    _hover={{ bg: "rgb(240, 212, 58)" }}
-                    onClick={() => onChangePage(totalPages)}
-                >
-                    {totalPages}
-                </Button>
-            )}
-        </Flex>
-    );
+    const buttonStyles = {
+        bg: "#22559c",
+        color: "rgb(253, 253, 253)",
+        transition: "background-color 300ms",
+    };
+
+return (
+    <Flex justifyContent="center" gap="2vw">
+        {showStart && (
+            <ArrowBtn
+                arrow={1}
+                onClick={() => onChangePage(1)}
+                isActive={currentPage === 1}
+                styles={currentPage === 1 ? buttonStyles : undefined}
+            />
+        )}
+        {showStart && <Button bg="transparent" disabled>...</Button>}
+        {pageNumbers.map((pageNumber) => (
+            <ArrowBtn
+                key={pageNumber}
+                arrow={pageNumber}
+                onClick={() => onChangePage(pageNumber)}
+                isActive={currentPage === pageNumber}
+                styles={currentPage === pageNumber ? buttonStyles : undefined}
+            />
+        ))}
+        {showEnd && <Button bg="transparent" disabled>...</Button>}
+        {showEnd && (
+            <ArrowBtn
+                arrow={showPages}
+                onClick={() => onChangePage(showPages)}
+                isActive={currentPage === showPages}
+                styles={currentPage === showPages ? buttonStyles : undefined}
+            />
+        )}
+    </Flex>
+);
 };

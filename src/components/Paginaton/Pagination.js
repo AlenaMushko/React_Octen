@@ -1,40 +1,52 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {PiArrowFatLineLeftThin, PiArrowFatLineRightThin} from 'react-icons/pi';
-import { Flex} from "@chakra-ui/react";
+import {Flex} from "@chakra-ui/react";
+
 import {ArrowBtn} from "../ArrowBtn";
 import {PageNumbers} from "./PageNumbers";
 
 
-export const Pagination = ({page, moviesLength, totalPages}) => {
-    const [currentPage, setCurrentPage] = useState(page);
+export const Pagination = ({page,  totalPages, setCurrentPage}) => {
+    const [myPage, setMyPage] = useState(page);
+    let showPages = totalPages >500?  500 :  totalPages;
+
+    useEffect(() => {
+        setMyPage(page)
+    }, [page])
 
     const handleNextPage = () => {
-        if (moviesLength === 20) {
-            setCurrentPage(prevPage => prevPage + 1);
+        if (myPage < totalPages) {
+            setMyPage(prevPage => prevPage + 1);
+
         }
     };
 
     const handlePrevPage = () => {
-        setCurrentPage(prevPage => prevPage - 1);
+        setMyPage(prevPage => prevPage - 1);
+        setCurrentPage(myPage);
     };
 
     const handleChangePage = (pageNumber) => {
-        setCurrentPage(pageNumber);
+        setMyPage(pageNumber);
+        setCurrentPage(myPage);
     };
 
-    console.log(currentPage);
+    useEffect(() => {
+        setCurrentPage(myPage);
+        window.scrollTo(0, 0);
+    }, [myPage, setCurrentPage])
 
     return (
         <Flex justifyContent="center" gap='4vw' pb={10}>
             <ArrowBtn arrow={<PiArrowFatLineLeftThin style={{fontSize: 25}}/>}
                       onClick={handlePrevPage}
-                      disablet={currentPage<=1}/>
+                      isActive={myPage > 1}/>
 
-            <PageNumbers currentPage={currentPage} totalPages={totalPages} onChangePage={handleChangePage}/>
+            <PageNumbers currentPage={myPage} totalPages={totalPages} onChangePage={handleChangePage}/>
 
             <ArrowBtn arrow={<PiArrowFatLineRightThin style={{fontSize: 25}}/>}
                       onClick={handleNextPage}
-                      disablet={moviesLength<20}/>
+                      isActive={myPage !== showPages}/>
         </Flex>
     );
 };

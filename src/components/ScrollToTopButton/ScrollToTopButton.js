@@ -37,7 +37,7 @@ export const ScrollToTopButton = () => {
     };
 
     return (
-        <ArrowBtn  arrow={<PiArrowFatLinesUp style={{fontSize: 30}}/>} styles={buttonStyles} onClick={scrollToTop}/>
+        <ArrowBtn isActive={isVisible}  arrow={<PiArrowFatLinesUp style={{fontSize: 30}}/>} styles={buttonStyles} onClick={scrollToTop}/>
     );
 };
 
