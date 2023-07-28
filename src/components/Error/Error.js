@@ -12,13 +12,16 @@ export const Error = () => {
             <Text as='b' fontSize='30px' color={theme.colors.border}>Error, something went wrong</Text>
 
             <Link to={AppRoutes.HOME} style={{textDecoration: 'none'}}>
-                <Button colorScheme={theme.colors.border} variant="outline"
+                <Button
+                    color='rgb(253, 253, 253)'
+                    // colorScheme={theme.colors.border}
+                        variant="outline"
                         margin='30px 0'
                         _hover={{
                             backgroundColor: 'rgba(230, 48, 77, 0.87)',
                             color: 'theme.colors.secondary'
                         }}>
-                    <Box marginRight="12px"><RxExit/></Box> Go to home page
+                    <Box marginRight="12px"><RxExit/></Box>Go to home page
                 </Button>
             </Link>
 

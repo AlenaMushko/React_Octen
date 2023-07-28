@@ -31,6 +31,7 @@ export const PageNumbers = ({currentPage, totalPages, onChangePage}) => {
                     arrow={1}
                     onClick={() => onChangePage(1)}
                     isActive={currentPage === 1}
+                    disabled={currentPage <= 1}
                     styles={currentPage === 1 ? buttonStyles : undefined}
                 />
             )}
@@ -48,6 +49,7 @@ export const PageNumbers = ({currentPage, totalPages, onChangePage}) => {
             {showEnd && (
                 <ArrowBtn
                     arrow={showPages}
+                    disabled={currentPage >= showPages}
                     onClick={() => onChangePage(showPages)}
                     isActive={currentPage === showPages}
                     styles={currentPage === showPages ? buttonStyles : undefined}
