@@ -1,15 +1,10 @@
+import React, { Component } from 'react';
+import Layout from "./components/Layout/Layout";
 
-import styles from "./App.module.css";
-
-function App() {
-
-    return (<div className={styles.section}>
-        App
-    </div>);
+class App extends Component {
+    render() {
+        return <Layout />;
+    }
 }
 
 export default App;
-
-
-
-
