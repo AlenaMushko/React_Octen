@@ -1,5 +1,8 @@
 .section{
-    width: 90vw;
+    padding: 30px 15px;
+    width: 60vw;
+    border: 1px solid tomato;
+    border-radius: 12px;
     margin: 5vh auto 0;
 }
 
@@ -7,7 +10,7 @@
     border-radius: 8px;
     border: transparent;
     padding: 8px 20px;
-    background-color: #0a920a;
+    background-color: #0b5892;
     color: honeydew;
 
 }
@@ -15,9 +18,4 @@
 .btn:hover{
     cursor: pointer;
     background-color: tomato;
-}
-
-.listBtn{
-    display: flex;
-    justify-content: space-between;
 }
