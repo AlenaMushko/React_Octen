@@ -5,8 +5,8 @@ import './index.css';
 import App from './App';
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const root = document.getElementById('root') as HTMLElement;
+ReactDOM.createRoot(root).render(
     <React.StrictMode>
         <BrowserRouter basename="React_Octen">
             <App/>

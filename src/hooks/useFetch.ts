@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 // створити хук useFetch, котрий спроможний робити запит на jsonplaceholder на /users, /posts,
 // /comments в залежності від аргументу.
 //     Сигнатура хука function(endpoint)
-export function useFetch(endpoint) {
+export function useFetch(endpoint:string) {
     const [data, setData] = useState(null);
 
     useEffect(() => {

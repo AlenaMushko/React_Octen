@@ -1,9 +1,9 @@
-import {useState} from "react";
+import React, {useState} from "react";
 
-import styles from "./App.module.css";
+import styles from './App.module.css';
 import {TestUseMemo, Fetch, Todo} from "./components";
 
-function App() {
+const App:React.FC =()=> {
     const [count, setCount] = useState(0);
     const [countSecond, setCountSecond] = useState(0);
     const [background, setBackground] = useState(false);

@@ -1,9 +1,15 @@
-import {memo, useCallback, useMemo} from "react";
+import React, {Dispatch, memo, SetStateAction, useCallback, useMemo} from "react";
 
 import {useToggle} from "../../hooks";
 import styles from "./TestUseMemo.module.css";
 
-export const TestUseMemo = memo(function TestUseMemo({data, background, setBackground}) {
+interface IProps{
+    data:number,
+    background:boolean,
+    setBackground:Dispatch<SetStateAction<boolean>>,
+}
+
+export const TestUseMemo:React.FC<IProps> = memo(function TestUseMemo({data, background, setBackground}) {
     console.log('TestUseMemo')
 
 // Створити в середині TestUseMemo функцію, з "важкою" логікою (наприклад великий цикл).
@@ -18,7 +24,7 @@ export const TestUseMemo = memo(function TestUseMemo({data, background, setBackg
     // };
 
     // Зробити те саме, але з використанням useCallback
-    const memoCalc = useCallback((num) => {
+    const memoCalc = useCallback((num:number) => {
         let result = [];
         for (let i = 0; i < 100; i++) {
             result.push(((i + num) / (num * 2)).toFixed(2));
@@ -26,7 +32,7 @@ export const TestUseMemo = memo(function TestUseMemo({data, background, setBackg
         return result;
     }, []);
 
-    const memoFunction = useMemo(() => memoCalc(data), [data]);
+    const memoFunction = useMemo(() => memoCalc(data), [data, memoCalc]);
 
     const [newBG, toggleBG] = useToggle(background);
     const handleToggle = () => {
