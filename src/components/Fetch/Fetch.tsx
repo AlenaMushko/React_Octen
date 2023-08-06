@@ -3,7 +3,7 @@ import React from "react";
 import styles from "../TestUseMemo/TestUseMemo.module.css";
 import {useFetch} from "../../hooks";
 
-interface Item {
+type TItem ={
     id: number;
     title: string;
     name: string;
@@ -16,7 +16,7 @@ interface IProps{
     url:string,
 }
 export const Fetch:React.FC<IProps> = ({url}) => {
-    const {data} = useFetch(url) as unknown as {data: Item[], loading: boolean, error: any};
+    const {data} = useFetch(url) as unknown as {data: TItem[], loading: boolean, error: any};
 
     return (
         <section className={styles.section}>
