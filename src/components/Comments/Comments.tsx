@@ -1,11 +1,23 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 
 import styles from './Comments.module.css';
 import {getFromService} from "../../services";
 import {Loader} from "../Loader";
 
-export class Comments extends Component {
-    constructor(props) {
+type TComments = {
+    id:number,
+    name:string,
+    email:string,
+    body:string
+}
+
+interface IState{
+    comments: TComments[],
+    isLoading: boolean,
+    error:any,
+}
+export class Comments extends Component<{}, IState>{
+    constructor(props:{}) {
         super(props);
         this.state = {
             comments: [],
@@ -21,7 +33,7 @@ export class Comments extends Component {
         try {
             const res = await getFromService.getAllComments();
             if (res.status !== 200) {
-                throw new Error(res.status);
+                throw new Error(res.status.toString());
             }
             const data = res.data;
             this.setState({

@@ -1,11 +1,23 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 
 import styles from '../Comments/Comments.module.css';
 import {getFromService} from "../../services";
 import {Loader} from "../Loader";
 
-export class Posts extends Component{
-    constructor(props) {
+type TPosts = {
+    id:number,
+    title:string,
+    body:string
+}
+
+interface IState{
+    posts: TPosts[],
+    isLoading: boolean,
+    error: any,
+}
+
+export class Posts extends Component<{}, IState>{
+    constructor(props:{}) {
         super(props);
         this.state = {
             posts: [],
@@ -21,7 +33,7 @@ export class Posts extends Component{
         try {
             const res = await getFromService.getAllPosts();
             if (res.status !== 200) {
-                throw new Error(res.status);
+                throw new Error(res.status.toString());
             }
             const data = res.data;
             this.setState({

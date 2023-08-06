@@ -1,11 +1,23 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 
 import styles from './Cars.module.css';
 import {getFromService} from "../../services";
 import {Loader} from "../Loader";
 
-export class Cars extends Component {
-    constructor(props) {
+type TCars = {
+    id:number,
+    brand:string,
+    price:number,
+    year:number,
+}
+
+interface IState {
+    cars: TCars[],
+    isLoading: boolean,
+    error: any,
+}
+export class Cars extends Component<{}, IState> {
+    constructor(props:{}) {
         super(props);
         this.state = {
             cars: [],
@@ -21,7 +33,7 @@ export class Cars extends Component {
         try {
             const res = await getFromService.getAllCars();
             if (res.status !== 200) {
-                throw new Error(res.status);
+                throw new Error(res.status.toString());
             }
             const data = res.data;
             this.setState({

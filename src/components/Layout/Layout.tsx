@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import {useLocation, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 import Header from './Header';
 import {Cars, Comments, Posts} from "../index";
 
-class Layout extends Component {
+
+export default class Layout extends Component {
+
     render() {
         return (
             <>
-                <Header location={this.props.location}/>
+                <Header/>
                 <main>
                     <Routes>
                         <Route path="/" element={<Comments/>}/>
@@ -21,10 +23,4 @@ class Layout extends Component {
     }
 }
 
-function LayoutWithLocation() {
-    const location = useLocation();
 
-    return <Layout location={location}/>;
-}
-
-export default LayoutWithLocation;
