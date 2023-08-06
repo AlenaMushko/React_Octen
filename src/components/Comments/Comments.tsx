@@ -1,12 +1,22 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
 import styles from './Comments.module.css';
 import {commentsService} from "../../services";
 import {AppRoutes} from "../../routing/appRoutes";
 
-export const Comments = ({setIsLoading}) => {
-    const [comments, setComments] = useState(null);
+interface IProps{
+    setIsLoading:(isLoading: boolean)=>void,
+}
+
+type TComment = {
+    id:number;
+    email:string;
+    name:string;
+}
+
+export const Comments:React.FC<IProps> = ({setIsLoading}) => {
+    const [comments, setComments] = useState <TComment[] | null>(null);
 
     const getAllComments = async () => {
         setIsLoading(true);
@@ -14,7 +24,8 @@ export const Comments = ({setIsLoading}) => {
             const {data} = await commentsService.getAll();
             return data;
         } catch (err) {
-            console.log(err.message);
+            const error = err as Error;
+            console.log(error.message);
         } finally {
             setIsLoading(false);
         }

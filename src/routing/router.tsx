@@ -1,12 +1,12 @@
-import * as React from "react";
+import React from "react";
 import {createBrowserRouter,} from "react-router-dom";
 
-import {AlbumsPage, CommentIdPage, CommentsPage, TodosPage} from "../pages";
-import {AppLayout} from "../components";
-import {AppRoutes} from "./appRoutes";
-import Error from "../components/Error/Error";
 
-export const router = createBrowserRouter([
+import {AppRoutes} from "./appRoutes";
+import {AppLayout, Error} from "../components";
+import {AlbumsPage, CommentIdPage, CommentsPage, TodosPage} from "../pages";
+
+export const router= createBrowserRouter([
     {
         element: <AppLayout/>,
         children: [
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "*",
-                element: <Error />,
+                element: <Error/>,
             },
         ]
     }

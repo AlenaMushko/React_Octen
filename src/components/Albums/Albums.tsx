@@ -1,10 +1,17 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {albumsService} from "../../services";
 import styles from './Albums.module.css';
 
-export const Albums = ({setIsLoading}) => {
-    const [albums, setAlbums] = useState(null);
+type TAlbum = {
+    id:number;
+    title:string;
+}
+interface IProps{
+    setIsLoading:(isLoading: boolean)=>void,
+}
+export const Albums:React.FC<IProps> = ({setIsLoading}) => {
+    const [albums, setAlbums] = useState<TAlbum[] | null>(null);
 
     const getAllAlbums = async () => {
         setIsLoading(true);
@@ -12,7 +19,8 @@ export const Albums = ({setIsLoading}) => {
             const {data} = await albumsService.getAll();
             return data;
         } catch (err) {
-            console.log(err.message);
+            const error = err as Error;
+            console.log(error.message);
         } finally {
             setIsLoading(false);
         }

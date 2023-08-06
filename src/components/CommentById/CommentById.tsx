@@ -1,18 +1,29 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styles from './CommentById.module.css';
 import {commentsService} from "../../services";
 
-export const CommentById = ({setIsLoading, id}) => {
-    const [comment, setComment] = useState(null);
+type TComment={
+    name:string;
+    email:string;
+    body:string;
+}
+interface IProps{
+    id:string,
+    setIsLoading:(isLoading: boolean)=>void,
+}
 
-    const getCommentById = async (id) => {
+export const CommentById:React.FC<IProps> = ({setIsLoading, id}) => {
+    const [comment, setComment] = useState<TComment | null>(null);
+
+    const getCommentById = async (id:string) => {
         setIsLoading(true);
         try {
             const {data} = await commentsService.getById(id);
             return data;
         } catch (err) {
-            console.log(err.message);
+            const error = err as Error;
+            console.log(error.message);
         } finally {
             setIsLoading(false);
         }

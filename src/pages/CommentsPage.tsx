@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import {useContext} from "react";
+import  React, {useContext} from "react";
 
 import {Comments, Container} from "../components";
 import {LoaderContext} from "../routing/LoaderProvider";

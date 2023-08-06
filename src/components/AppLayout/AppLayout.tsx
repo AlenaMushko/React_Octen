@@ -6,7 +6,11 @@ import {Loader} from "../Loader";
 import styles from './AppLayout.module.css';
 import {AppRoutes} from '../../routing/appRoutes';
 
-export const AppLayout = () => {
+interface IProps{
+    setIsLoading?:(isLoading: boolean)=>void,
+}
+
+export const AppLayout:React.FC<IProps> = () => {
     const {isLoading} = useContext(LoaderContext);
 
     const links = [

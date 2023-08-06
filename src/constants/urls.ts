@@ -13,7 +13,7 @@ const urls = {
     },
     comments: {
         base: comments,
-        byId: (id) => `${comments}/${id}`
+        byId: (id:string) => `${comments}/${id}`
     }
 }
 

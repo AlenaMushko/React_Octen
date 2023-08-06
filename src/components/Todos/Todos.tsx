@@ -1,10 +1,19 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styles from './Todos.module.css';
 import {todosService} from "../../services";
 
-export const Todos = ({setIsLoading}) => {
-    const [todos, setTodos] = useState(null);
+type TTodo ={
+    id:number;
+    title:string;
+    completed:boolean
+}
+interface IProps{
+    setIsLoading:(isLoading: boolean)=>void,
+}
+
+export const Todos:React.FC<IProps> = ({setIsLoading}) => {
+    const [todos, setTodos] = useState<TTodo[] | null>(null);
 
     const getAllTodos = async () => {
         setIsLoading(true);
@@ -12,7 +21,8 @@ export const Todos = ({setIsLoading}) => {
             const {data} = await todosService.getAll();
             return data;
         } catch (err) {
-            console.log(err.message);
+            const error = err as Error;
+            console.log(error.message);
         } finally {
             setIsLoading(false);
         }
