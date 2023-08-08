@@ -1,11 +1,11 @@
 
 import styles from "./App.module.css";
-import {Cars} from "./components";
+import {CarsList} from "./components";
 
 function App() {
 
     return (<div className={styles.section}>
-     <Cars/>
+     <CarsList/>
     </div>);
 }
 
