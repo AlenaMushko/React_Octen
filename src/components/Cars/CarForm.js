@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useDispatch, useSelector} from "react-redux";
@@ -7,29 +7,33 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from './Cars.module.css';
 import {Label} from "../Label/Label";
 import {CarsValidators} from "../../validators/CarsValidators";
-import {carsActions} from "../../redux/actions/carsActions";
+import {addCar, getByIdCar} from "../../redux";
 
 
-export const CarForm = ({idCar}) => {
+export const CarForm = ({idCar, setIdCar}) => {
     const dispatch = useDispatch();
-    const isCarUpdate = useSelector(store=>store.carReduser.isCarUpdate)
+    const isCarUpdate = useSelector(store => store.carReduser.isCarUpdate)
+    const addCreateCar = (data) => dispatch(addCar(data));
+    const getUpdateCar = (id) => dispatch(getByIdCar(id));
 
-    const [newCar, setNewCar] = useState(null)
+    const updatedCar = useSelector(store => store.carReduser.updateCar);
 
-    const fetchCarById = (idCar) => {
-        if (idCar) {
-            dispatch(carsActions.setIsLoading(true));
-            fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${idCar}`, {method: 'GET'})
-                .then(res => res.json())
-                .then(data => setNewCar(data))
-                .catch(err => console.log(err))
-                .finally(dispatch(carsActions.setIsLoading(false)))
-        }
-    }
+    const [newCar, setNewCar] = useState(null);
 
     useEffect(() => {
-        fetchCarById(idCar);
+        if (idCar) {
+            getUpdateCar(idCar);
+            setIdCar(null);
+        }
     }, [idCar]);
+
+    useEffect(() => {
+        if (updatedCar ) {
+            setNewCar(updatedCar);
+        }
+    }, [updatedCar]);
+
+    console.log(newCar)
 
     const {
         register,
@@ -44,14 +48,14 @@ export const CarForm = ({idCar}) => {
     const carsFormSubmit = (data) => {
         if (!isCarUpdate) {
             data.id = uuidv4();
-            dispatch(carsActions.setIsCarUpdate(false));
-            dispatch(carsActions.setCar(data));
-
-        } else{
-            dispatch(carsActions.setUpdateCar(newCar.id, {...newCar, ...data}));
+            console.log(data)
+            addCreateCar(data)
+        } else {
+            // addCreateCar(newCar.id, {...newCar, ...data})
         }
         reset();
-        setNewCar(null);
+        // setNewCar(null);
+        // dispatch(carsActions.setIsCarUpdate(false));
     };
 
     return (

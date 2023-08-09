@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 
 import styles from "./Cars.module.css";
-import {carsActions} from "../../redux/actions/carsActions";
+import {removeByIdCar} from '../../redux'
 
 export const CarCard = ({item, update}) => {
     const {id, brand, price, year}=item;
     const dispatch = useDispatch();
 
+    const removeCar = (carId) => dispatch(removeByIdCar(carId))
+
     const handleRemove = (idCar) => {
-        dispatch(carsActions.removeCarById(idCar))
+        removeCar(idCar);
     }
 
     return (

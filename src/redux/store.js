@@ -1,5 +1,7 @@
-import {combineReducers, createStore} from "redux";
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import {composeWithDevTools} from "redux-devtools-extension";
+import thunk from 'redux-thunk';
+
 import carReduser from "./redusers/CarReduser";
 
 const rootReduser = combineReducers({
@@ -11,5 +13,5 @@ const composeEnhancers = composeWithDevTools({
     traceLimit:25,
 })
 
-const store =  createStore(rootReduser);
+const store =  createStore(rootReduser, composeEnhancers(applyMiddleware(thunk)));
 export default store;
