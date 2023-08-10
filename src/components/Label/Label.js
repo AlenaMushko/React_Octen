@@ -1,6 +1,7 @@
 import styles from "../Cars/Cars.module.css";
 
 export const Label = ({value, type, nameLabel, errors, register, valueInput, onChange}) => {
+
     return (
         <label>
             {value}

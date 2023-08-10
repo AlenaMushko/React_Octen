@@ -38,9 +38,9 @@ export const addCar = (data)=>(dispatch)=>{
         .finally(() => dispatch(carsActions.setIsLoading(false)))
 }
 
-export const putchCar = (id, data)=>(dispatch)=>{
+export const updateCar = (id, data)=>(dispatch)=>{
     dispatch(carsActions.setIsLoading(true));
-    carService.patchById(id, data)
+    carService.updateById(id, data)
         .then(res => {
             dispatch(carsActions.setUpdateCar(id, res.data));
 

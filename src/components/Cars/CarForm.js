@@ -7,15 +7,26 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from './Cars.module.css';
 import {Label} from "../Label/Label";
 import {CarsValidators} from "../../validators/CarsValidators";
-import {addCar, carsActions, getByIdCar, putchCar} from "../../redux";
+import {addCar, carsActions, getByIdCar, updateCar,} from "../../redux";
 
 
 export const CarForm = ({idCar, setIdCar}) => {
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: {errors, isValid},
+    } = useForm({
+        mode: 'all',
+        resolver: joiResolver(CarsValidators),
+    });
+
+
     const dispatch = useDispatch();
     const isCarUpdate = useSelector(store => store.carReduser.isCarUpdate)
     const addCreateCar = (data) => dispatch(addCar(data));
     const getUpdateCar = (id) => dispatch(getByIdCar(id));
-    const addUpdateCar = (id, data) => dispatch(putchCar(id, data));
+    const addUpdateCar = (id, data) => dispatch(updateCar(id, data));
 
     const updatedCar = useSelector(store => store.carReduser.updateCar);
 
@@ -31,19 +42,13 @@ export const CarForm = ({idCar, setIdCar}) => {
     useEffect(() => {
         if (updatedCar) {
             setNewCar(updatedCar);
+            setValue('brand', updatedCar.brand)
+            setValue('price', updatedCar.price)
+            setValue('year', updatedCar.year)
         } else {
             setNewCar(null)
         }
     }, [updatedCar]);
-
-    const {
-        register,
-        handleSubmit,
-        formState: {errors, isValid},
-    } = useForm({
-        mode: 'all',
-        resolver: joiResolver(CarsValidators),
-    });
 
     const carsFormSubmit = (data) => {
         const finalData = {
