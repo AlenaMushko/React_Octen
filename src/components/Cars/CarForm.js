@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from './Cars.module.css';
 import {Label} from "../Label/Label";
 import {CarsValidators} from "../../validators/CarsValidators";
-import {addCar, getByIdCar} from "../../redux";
+import {addCar, carsActions, getByIdCar, putchCar} from "../../redux";
 
 
 export const CarForm = ({idCar, setIdCar}) => {
@@ -15,6 +15,7 @@ export const CarForm = ({idCar, setIdCar}) => {
     const isCarUpdate = useSelector(store => store.carReduser.isCarUpdate)
     const addCreateCar = (data) => dispatch(addCar(data));
     const getUpdateCar = (id) => dispatch(getByIdCar(id));
+    const addUpdateCar = (id, data) => dispatch(putchCar(id, data));
 
     const updatedCar = useSelector(store => store.carReduser.updateCar);
 
@@ -28,16 +29,15 @@ export const CarForm = ({idCar, setIdCar}) => {
     }, [idCar]);
 
     useEffect(() => {
-        if (updatedCar ) {
+        if (updatedCar) {
             setNewCar(updatedCar);
+        } else {
+            setNewCar(null)
         }
     }, [updatedCar]);
 
-    console.log(newCar)
-
     const {
         register,
-        reset,
         handleSubmit,
         formState: {errors, isValid},
     } = useForm({
@@ -46,16 +46,19 @@ export const CarForm = ({idCar, setIdCar}) => {
     });
 
     const carsFormSubmit = (data) => {
+        const finalData = {
+            ...newCar,
+            ...data,
+            id: isCarUpdate ? newCar.id : uuidv4()
+        };
         if (!isCarUpdate) {
-            data.id = uuidv4();
-            console.log(data)
-            addCreateCar(data)
+            addCreateCar(finalData);
         } else {
-            // addCreateCar(newCar.id, {...newCar, ...data})
+            addUpdateCar(finalData.id, finalData);
+            dispatch(carsActions.setIsCarUpdate(false));
+            dispatch(carsActions.resetUpdatedCar());
         }
-        reset();
-        // setNewCar(null);
-        // dispatch(carsActions.setIsCarUpdate(false));
+        setNewCar(null);
     };
 
     return (

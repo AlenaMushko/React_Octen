@@ -9,14 +9,15 @@ const initialtate={
 
 export const carActionType={
  SET_ISLOADING:'SET_ISLOADING',
+ SET_ERROR:'SET_ERROR',
+ SET_IS_CAR_UPDATE:'SET_IS_CAR_UPDATE',
+
  GET_CARS:'GET_CARS',
  GET_CAR_BY_ID:'GET_CAR_BY_ID',
  SET_CAR:'SET_CAR',
- SET_ERROR:'SET_ERROR',
  REMOVE_CAR_BY_ID:'REMOVE_CAR_BY_ID',
- SET_CARS_BY_ID:'SET_CARS_BY_ID',
  SET_UPDATE_CAR:'SET_UPDATE_CAR',
- SET_IS_CAR_UPDATE:'SET_IS_CAR_UPDATE',
+ RESET_UPDATED_CAR: 'RESET_UPDATED_CAR',
 }
 const carReduser = (state=initialtate, action)=>{
     switch (action.type){
@@ -52,8 +53,6 @@ const carReduser = (state=initialtate, action)=>{
        ...state,
        cars: state.cars.filter(car => car.id !== action.payload),
       }
-
-
      case carActionType.SET_CAR:
       return {
        ...state,
@@ -61,8 +60,6 @@ const carReduser = (state=initialtate, action)=>{
        isLoading: false,
        isCarUpdate:false,
       }
-
-
      case carActionType.SET_UPDATE_CAR:
       return {
        ...state,
@@ -72,7 +69,11 @@ const carReduser = (state=initialtate, action)=>{
        isLoading: false,
        isCarUpdate:false,
       }
-
+     case carActionType.RESET_UPDATED_CAR:
+      return {
+       ...state,
+       updateCar: {},
+      }
      default:
       return state
     }
