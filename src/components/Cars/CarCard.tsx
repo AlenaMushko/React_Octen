@@ -2,15 +2,21 @@ import React from 'react';
 import {useDispatch} from "react-redux";
 
 import styles from "./Cars.module.css";
-import {removeByIdCar} from '../../redux'
+import {Cars, removeByIdCar} from '../../redux'
+import {AppDispatch} from "../../redux/store";
 
-export const CarCard = ({item, update}) => {
+interface IProps{
+    item:Cars,
+    update: (id: number) => void
+}
+
+export const CarCard:React.FC<IProps>= ({item, update}) => {
     const {id, brand, price, year} = item;
-    const dispatch = useDispatch();
+    const dispatch:AppDispatch = useDispatch();
 
-    const removeCar = (carId) => dispatch(removeByIdCar(carId))
+    const removeCar = (carId:number ) => dispatch(removeByIdCar(carId))
 
-    const handleRemove = (idCar) => {
+    const handleRemove = (idCar:number) => {
         removeCar(idCar);
     }
 

@@ -5,22 +5,27 @@ import {Loader} from '../Loader';
 import {CarCard} from "./CarCard";
 import {CarForm} from "./CarForm";
 import styles from './Cars.module.css';
-import {carsActions, getAllCars} from "../../redux";
+import {Cars, carsActions, getAllCars} from "../../redux";
+import {AppDispatch, AppStateType} from "../../redux/store";
 
-export const CarsList = () => {
-    const dispatch = useDispatch();
+type IdCarState = {
+    idCar: number | null;
+};
+
+export const CarsList:React.FC = () => {
+    const dispatch: AppDispatch = useDispatch<AppDispatch>();
     const fetchAllCars = () => dispatch(getAllCars())
 
-    const cars = useSelector(store => store.carReduser.cars);
-    const isLoading = useSelector(store => store.carReduser.isLoading);
-    const [idCar, setIdCar] = useState(null);
+    const cars:Cars[] | [] = useSelector((store:AppStateType) => store.carReduser.cars);
+    const isLoading = useSelector((store:AppStateType) => store.carReduser.isLoading);
+    const [idCar, setIdCar] = useState<IdCarState>({ idCar: null });
 
     useEffect(() => {
         fetchAllCars();
     }, [idCar]);
 
-    const handleUpdate = (idCar) => {
-        setIdCar(idCar);
+    const handleUpdate = (id:number) => {
+        setIdCar({ idCar: id });
         dispatch(carsActions.setIsCarUpdate(true));
     }
 
@@ -29,9 +34,11 @@ export const CarsList = () => {
             {isLoading
                 ? <Loader/>
                 : <>
-                    <CarForm idCar={idCar} setIdCar={setIdCar}/>
+                    <CarForm idCar={idCar.idCar}
+                             // setIdCar={setIdCar}
+                    />
                     <ul className={styles.car_list}>
-                        {cars.map(car => (
+                        {cars?.map(car => (
                             <CarCard key={car.id} item={car} update={handleUpdate}/>
                         ))}
                     </ul>

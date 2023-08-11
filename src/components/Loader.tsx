@@ -1,6 +1,7 @@
+import React from "react";
 import {Rings} from 'react-loader-spinner';
 
-export const Loader = () => (
+export const Loader:React.FC = () => (
     <Rings
         height="80"
         width="80"

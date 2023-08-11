@@ -1,6 +1,17 @@
+import React from 'react';
 import styles from "../Cars/Cars.module.css";
 
-export const Label = ({value, type, nameLabel, errors, register, valueInput, onChange}) => {
+interface IProps {
+    value: string,
+    type: string,
+    nameLabel: string,
+    errors: any,
+    register: any,
+    valueInput: string | number,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export const Label:React.FC<IProps> = ({value, type, nameLabel, errors, register, valueInput, onChange}) => {
 
     return (
         <label>

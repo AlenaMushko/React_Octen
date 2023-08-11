@@ -7,10 +7,17 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from './Cars.module.css';
 import {Label} from "../Label/Label";
 import {CarsValidators} from "../../validators/CarsValidators";
-import {addCar, carsActions, getByIdCar, updateCar,} from "../../redux";
+import {addCar, Cars, carsActions, getByIdCar, updateCar,} from "../../redux";
+import {AppDispatch, AppStateType} from "../../redux/store";
 
+interface IProps{
+    idCar:number | null,
+    // setIdCar: (id: number ) => void;
+}
 
-export const CarForm = ({idCar, setIdCar}) => {
+export const CarForm:React.FC<IProps> = ({idCar
+                                             // , setIdCar
+}) => {
     const {
         register,
         handleSubmit,
@@ -22,20 +29,21 @@ export const CarForm = ({idCar, setIdCar}) => {
     });
 
 
-    const dispatch = useDispatch();
-    const isCarUpdate = useSelector(store => store.carReduser.isCarUpdate)
-    const addCreateCar = (data) => dispatch(addCar(data));
-    const getUpdateCar = (id) => dispatch(getByIdCar(id));
-    const addUpdateCar = (id, data) => dispatch(updateCar(id, data));
+    const dispatch:AppDispatch = useDispatch();
+    const isCarUpdate = useSelector((store:AppStateType) => store.carReduser.isCarUpdate)
+    const addCreateCar = (data:{}) => dispatch(addCar(data));
+    const getUpdateCar = (id: number) => dispatch(getByIdCar(id));
+    const addUpdateCar = (id:number , data:{}) => dispatch(updateCar(id, data));
 
-    const updatedCar = useSelector(store => store.carReduser.updateCar);
+    const updatedCar:Cars | null  = useSelector((store:AppStateType) => store.carReduser.updateCar);
 
-    const [newCar, setNewCar] = useState(null);
+    const [newCar, setNewCar] = useState<Cars | null >(null);
 
     useEffect(() => {
         if (idCar) {
+            console.log(idCar)
             getUpdateCar(idCar);
-            setIdCar(null);
+            // setIdCar(null);
         }
     }, [idCar]);
 
@@ -50,16 +58,16 @@ export const CarForm = ({idCar, setIdCar}) => {
         }
     }, [updatedCar]);
 
-    const carsFormSubmit = (data) => {
+    const carsFormSubmit = (data:{}) => {
         const finalData = {
             ...newCar,
             ...data,
-            id: isCarUpdate ? newCar.id : uuidv4()
+            id: isCarUpdate && newCar ? newCar.id : uuidv4()
         };
         if (!isCarUpdate) {
             addCreateCar(finalData);
         } else {
-            addUpdateCar(finalData.id, finalData);
+            addUpdateCar(finalData.id as number, finalData);
             dispatch(carsActions.setIsCarUpdate(false));
             dispatch(carsActions.resetUpdatedCar());
         }
@@ -72,15 +80,23 @@ export const CarForm = ({idCar, setIdCar}) => {
 
                 <Label value="Brand:" type="text" nameLabel="brand" errors={errors} register={register}
                        valueInput={newCar?.brand || ''}
-                       onChange={(e) => setNewCar({...newCar, brand: e.target.value})}
+                       onChange={(e) => setNewCar({...newCar, brand: e.target.value} as Cars)}
                 />
                 <Label value="Price:" type="number" nameLabel="price" errors={errors} register={register}
-                       valueInput={newCar?.price || ''}
-                       onChange={(e) => setNewCar({...newCar, price: e.target.value})}
+                       valueInput={newCar?.price || 0}
+                       onChange={(e) => {
+                           if (newCar) {
+                               setNewCar({...newCar, price: Number(e.target.value)});
+                           }
+                       }}
                 />
                 <Label value="Year:" type="number" nameLabel="year" errors={errors} register={register}
-                       valueInput={newCar?.year || ''}
-                       onChange={(e) => setNewCar({...newCar, year: e.target.value})}
+                       valueInput={newCar?.year || 0}
+                       onChange={(e) => {
+                           if (newCar) {
+                               setNewCar({...newCar, year: Number(e.target.value)});
+                           }
+                       }}
                 />
 
                 <div className={styles.btn_box}>
