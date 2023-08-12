@@ -5,13 +5,8 @@ import {Loader} from '../Loader';
 import {CarCard} from "./CarCard";
 import {CarForm} from "./CarForm";
 import styles from './Cars.module.css';
-import {Car,  getAllCars} from "../../redux";
+import {Car, getAllCars} from "../../redux";
 import {AppDispatch, AppStateType} from "../../redux/store";
-
-// type IdCarState = {
-//     carId: number | null;
-//     // setCarId: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-// };
 
 export const CarList: React.FC = () => {
     const dispatch: AppDispatch = useDispatch<AppDispatch>();

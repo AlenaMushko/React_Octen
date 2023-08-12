@@ -19,7 +19,7 @@ export const Label:React.FC<IProps> = ({value, type, nameLabel, errors, register
             <input type={type}
                    {...register(nameLabel, {required: true})}
                    className={styles.form_input}
-                   value={valueInput}
+                   value={valueInput !== null ? valueInput : ""}
                    onChange={onChange}
             />
             {errors[nameLabel] && <span>{errors[nameLabel].message}
