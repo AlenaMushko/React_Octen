@@ -1,68 +1,72 @@
 import React, {useEffect, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
-import {useForm} from "react-hook-form";
+import {SubmitHandler, useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useDispatch, useSelector} from "react-redux";
 
 import styles from './Cars.module.css';
 import {Label} from "../Label/Label";
 import {CarsValidators} from "../../validators/CarsValidators";
-import {addCar, Cars, carsActions, getByIdCar, updateCar,} from "../../redux";
+import {addCar, Car, carsActions, updateCar,} from "../../redux";
 import {AppDispatch, AppStateType} from "../../redux/store";
 
-interface IProps{
-    idCar:number | null,
-    // setIdCar: (id: number ) => void;
+interface CarDetailsI {
+    brand: string;
+    price: number | null;
+    year: number | null;
 }
 
-export const CarForm:React.FC<IProps> = ({idCar
-                                             // , setIdCar
-}) => {
+export const CarForm: React.FC = () => {
     const {
         register,
         handleSubmit,
         setValue,
         formState: {errors, isValid},
-    } = useForm({
+    } = useForm<Car>({
         mode: 'all',
         resolver: joiResolver(CarsValidators),
     });
 
 
-    const dispatch:AppDispatch = useDispatch();
-    const isCarUpdate = useSelector((store:AppStateType) => store.carReduser.isCarUpdate)
-    const addCreateCar = (data:{}) => dispatch(addCar(data));
-    const getUpdateCar = (id: number) => dispatch(getByIdCar(id));
-    const addUpdateCar = (id:number , data:{}) => dispatch(updateCar(id, data));
+    const dispatch: AppDispatch = useDispatch();
+    const isCarUpdate = useSelector((store: AppStateType) => store.carReduser.isCarUpdate)
+    const addCreateCar = (data: {}) => dispatch(addCar(data));
+    const addUpdateCar = (id: number, data: {}) => dispatch(updateCar(id, data));
 
-    const updatedCar:Cars | null  = useSelector((store:AppStateType) => store.carReduser.updateCar);
+    const selectedCar: Car | null = useSelector((store: AppStateType) => store.carReduser.selectedCar);
 
-    const [newCar, setNewCar] = useState<Cars | null >(null);
-
-    useEffect(() => {
-        if (idCar) {
-            console.log(idCar)
-            getUpdateCar(idCar);
-            // setIdCar(null);
-        }
-    }, [idCar]);
+    const [carDetails, setCarDetails] = useState<CarDetailsI>({
+        brand: '',
+        price: null,
+        year: null
+    });
 
     useEffect(() => {
-        if (updatedCar) {
-            setNewCar(updatedCar);
-            setValue('brand', updatedCar.brand)
-            setValue('price', updatedCar.price)
-            setValue('year', updatedCar.year)
-        } else {
-            setNewCar(null)
-        }
-    }, [updatedCar]);
+        if (selectedCar && isCarUpdate) {
+            setValue('brand', selectedCar.brand)
+            setValue('price', selectedCar.price)
+            setValue('year', selectedCar.year)
 
-    const carsFormSubmit = (data:{}) => {
+            setCarDetails({
+                brand: selectedCar.brand,
+                price: selectedCar.price,
+                year: selectedCar.year
+            });
+        }
+    }, [selectedCar]);
+
+    const handleInputChange = (name: keyof Car, value: string | number) => {
+        setCarDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
+    };
+
+    const carsFormSubmit: SubmitHandler<Car> = (data) => {
         const finalData = {
-            ...newCar,
+            ...selectedCar,
             ...data,
-            id: isCarUpdate && newCar ? newCar.id : uuidv4()
+            id: selectedCar?.id || uuidv4()
         };
         if (!isCarUpdate) {
             addCreateCar(finalData);
@@ -71,7 +75,6 @@ export const CarForm:React.FC<IProps> = ({idCar
             dispatch(carsActions.setIsCarUpdate(false));
             dispatch(carsActions.resetUpdatedCar());
         }
-        setNewCar(null);
     };
 
     return (
@@ -79,24 +82,16 @@ export const CarForm:React.FC<IProps> = ({idCar
             <form id='cars-form' className={styles.form} onSubmit={handleSubmit(carsFormSubmit)}>
 
                 <Label value="Brand:" type="text" nameLabel="brand" errors={errors} register={register}
-                       valueInput={newCar?.brand || ''}
-                       onChange={(e) => setNewCar({...newCar, brand: e.target.value} as Cars)}
+                       valueInput={carDetails ? carDetails.brand : ''}
+                       onChange={(e) => handleInputChange('brand', e.target.value)}
                 />
                 <Label value="Price:" type="number" nameLabel="price" errors={errors} register={register}
-                       valueInput={newCar?.price || 0}
-                       onChange={(e) => {
-                           if (newCar) {
-                               setNewCar({...newCar, price: Number(e.target.value)});
-                           }
-                       }}
+                       valueInput={carDetails ? carDetails.price : null}
+                       onChange={(e) => handleInputChange('price', e.target.value)}
                 />
                 <Label value="Year:" type="number" nameLabel="year" errors={errors} register={register}
-                       valueInput={newCar?.year || 0}
-                       onChange={(e) => {
-                           if (newCar) {
-                               setNewCar({...newCar, year: Number(e.target.value)});
-                           }
-                       }}
+                       valueInput={carDetails ? carDetails.year : null}
+                       onChange={(e) => handleInputChange('year', e.target.value)}
                 />
 
                 <div className={styles.btn_box}>

@@ -1,4 +1,4 @@
-import {carActionType} from "../redusers/CarReduser";
+import {Car, carActionType} from "../redusers/CarReduser";
 import {carService} from "../../services";
 import {ThunkAction} from "redux-thunk";
 import {AppDispatch, AppStateType} from "../store";
@@ -12,29 +12,22 @@ export const carsActions = {
     setIsLoading: (isLoading: boolean) => ({type: carActionType.SET_ISLOADING, payload: isLoading}),
     setError: (error: string) => ({type: carActionType.SET_ERROR, payload: error}),
     setIsCarUpdate: (isCarUpdate: boolean) => ({type: carActionType.SET_IS_CAR_UPDATE, payload: isCarUpdate}),
-    getCars: (data: {}) => ({type: carActionType.GET_CARS, payload: data}),
-    getCarById: (id: number ) => ({type: carActionType.GET_CAR_BY_ID, payload: id}),
+    setCars: (data: {}) => ({type: carActionType.GET_CARS, payload: data}),
+    selectCar: (data: Car ) => ({type: carActionType.SELECT_CAR, payload: data}),
     removeCarById: (id: number ) => ({type: carActionType.REMOVE_CAR_BY_ID, payload: id}),
-    setCar: (data: {}) => ({type: carActionType.SET_CAR, payload: data}),
-    setUpdateCar: (id: number, data: {}) => ({type: carActionType.SET_UPDATE_CAR, payload: {id, data}}),
+    setCar: (data: {}) => ({type: carActionType.CREATE_CAR, payload: data}),
+    setUpdateCar: (id: number, data: {}) => ({type: carActionType.UPDATE_CAR, payload: {id, data}}),
     resetUpdatedCar: () => ({type: carActionType.RESET_UPDATED_CAR}),
 }
 
 export const getAllCars = (): CarThunkType => (dispatch: AppDispatch) => {
     dispatch(carsActions.setIsLoading(true));
     carService.getAll()
-        .then(res => dispatch(carsActions.getCars(res.data)))
+        .then(res => dispatch(carsActions.setCars(res.data)))
         .catch(err => dispatch(carsActions.setError((err))))
         .finally(() => dispatch(carsActions.setIsLoading(false)))
 }
 
-export const getByIdCar = (id: number ): CarThunkType => (dispatch: AppDispatch) => {
-    dispatch(carsActions.setIsLoading(true));
-    carService.getById(id)
-        .then((res) => dispatch(carsActions.getCarById(res.data)))
-        .catch(err => dispatch(carsActions.setError((err))))
-        .finally(() => dispatch(carsActions.setIsLoading(false)))
-}
 export const addCar = (data: {}): CarThunkType => (dispatch: AppDispatch) => {
     dispatch(carsActions.setIsLoading(true));
     carService.postOne(data)

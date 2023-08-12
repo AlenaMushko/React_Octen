@@ -1,14 +1,14 @@
 
-export interface Cars{
- id:number,
+export interface Car {
+ id?:number,
  brand:string,
  price:number,
  year:number
 }
 
 export interface IState {
- cars: Cars[] | [],
- updateCar: Cars | null,
+ cars: Car[],
+ selectedCar: Car | null,
  error: string | null,
  isLoading: boolean,
  isCarUpdate: boolean,
@@ -16,7 +16,7 @@ export interface IState {
 
 const initialtate:IState={
  cars:[],
- updateCar:null,
+ selectedCar:null,
  error:null,
  isLoading:false,
  isCarUpdate:false,
@@ -28,10 +28,10 @@ export enum carActionType {
  SET_IS_CAR_UPDATE = 'SET_IS_CAR_UPDATE',
 
  GET_CARS = 'GET_CARS',
- GET_CAR_BY_ID = 'GET_CAR_BY_ID',
- SET_CAR = 'SET_CAR',
+ SELECT_CAR = 'SELECT_CAR',
+ CREATE_CAR = 'CREATE_CAR',
  REMOVE_CAR_BY_ID = 'REMOVE_CAR_BY_ID',
- SET_UPDATE_CAR = 'SET_UPDATE_CAR',
+ UPDATE_CAR = 'UPDATE_CAR',
  RESET_UPDATED_CAR =  'RESET_UPDATED_CAR',
 }
 
@@ -58,25 +58,24 @@ const carReduser = (state=initialtate, action:any):IState=>{
        cars:action.payload,
        isLoading: false,
       }
-     case carActionType.GET_CAR_BY_ID:
+     case carActionType.SELECT_CAR:
       return {
        ...state,
-       updateCar:action.payload,
-       isLoading: false,
+       selectedCar: action.payload,
       }
      case carActionType.REMOVE_CAR_BY_ID:
       return {
        ...state,
        cars: state.cars.filter(car => car.id !== action.payload),
       }
-     case carActionType.SET_CAR:
+     case carActionType.CREATE_CAR:
       return {
        ...state,
        cars: [...state.cars, action.payload],
        isLoading: false,
        isCarUpdate:false,
       }
-     case carActionType.SET_UPDATE_CAR:
+     case carActionType.UPDATE_CAR:
       return {
        ...state,
        cars: state.cars.map(car =>
@@ -88,7 +87,7 @@ const carReduser = (state=initialtate, action:any):IState=>{
      case carActionType.RESET_UPDATED_CAR:
       return {
        ...state,
-       updateCar: null,
+       selectedCar: null,
       }
      default:
       return state

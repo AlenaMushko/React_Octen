@@ -2,12 +2,12 @@ import React from 'react';
 import styles from "../Cars/Cars.module.css";
 
 interface IProps {
-    value: string,
+    value: string | number | null,
     type: string,
     nameLabel: string,
     errors: any,
     register: any,
-    valueInput: string | number,
+    valueInput:  string | number | null,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
