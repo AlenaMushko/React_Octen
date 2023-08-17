@@ -1,22 +1,27 @@
 .wrapper{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin: 60px 0;
 }
 
 .btn{
-    background-color: #4CAF50;
+    background-color: orange;
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 8px 24px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     border-radius: 12px;
     transition-duration: 0.4s;
 }
 
 .btn:hover {
-    background-color: #4CAF50;
+    background-color: lightskyblue;
+    color: white;
+}
+
+.btn:disabled {
+    background-color: gray;
     color: white;
 }

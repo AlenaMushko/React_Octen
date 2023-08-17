@@ -1,12 +1,12 @@
 import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue, isPending} from "@reduxjs/toolkit";
 import {episodesService} from "../../services";
 
-
 const initialState = {
     episodes: [],
     isLoading: false,
     error: null,
-    page:1,
+    page: 1,
+    nameEpisode: null,
 };
 
 export const all = createAsyncThunk(
@@ -28,7 +28,7 @@ const episodesSlice = createSlice({
     initialState,
     reducers: {
         incrementPage: (state) => {
-            if(state.episodes.length === 20){
+            if (state.episodes.length === 20) {
                 state.page += 1;
             }
         },
@@ -36,6 +36,9 @@ const episodesSlice = createSlice({
             if (state.page > 1) {
                 state.page -= 1;
             }
+        },
+        setNameEpisode: (state, {payload}) => {
+            state.nameEpisode = payload;
         }
     },
     extraReducers: builder =>
@@ -51,6 +54,7 @@ const episodesSlice = createSlice({
             .addMatcher(isFulfilled(all), state => {
                 state.isLoading = false
                 state.error = null
+                state.nameEpisode = null
             })
             .addMatcher(isRejectedWithValue(all), (state, {payload}) => {
                 state.isLoading = false
@@ -60,7 +64,7 @@ const episodesSlice = createSlice({
 
 const {reducer: episodeReduser, actions} = episodesSlice;
 
-const { incrementPage, decrementPage } = actions;
+const {incrementPage, decrementPage, setNameEpisode} = actions;
 
 const episodeActions = {
     all,
@@ -71,5 +75,6 @@ export
     episodeReduser,
     episodeActions,
     incrementPage,
-    decrementPage
+    decrementPage,
+    setNameEpisode
 }

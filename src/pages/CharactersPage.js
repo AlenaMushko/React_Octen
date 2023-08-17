@@ -1,16 +1,24 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 
-import {Loader} from "../components";
+import {CharactersList, Loader} from "../components";
+import {characterActions} from "../redux";
 
 export const CharactersPage = () => {
-    const {isLoading, error} = useSelector(state => state.constructor);
+    const dispatch = useDispatch();
+    const {characters, idArr, error, isLoading} = useSelector(state => state.character);
+
+    useEffect(() => {
+        idArr?.forEach(id => {
+            dispatch(characterActions.byId(id));
+        });
+    }, [idArr, dispatch]);
+
     return (
         <div>
             {isLoading && <Loader/>}
             {error && <h2>{JSON.stringify(error)}</h2>}
-
-            CharactersPage
+            {characters && <CharactersList/>}
 
         </div>
     );

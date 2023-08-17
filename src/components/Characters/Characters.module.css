@@ -1,10 +1,8 @@
-.list {
+.itemFlex{
     display: flex;
     gap: 3vw;
-    flex-wrap: wrap;
-}
-
-.item {
+    flex-direction: column;
+    align-items: center;
     width: 25vw;
     padding: 12px 8px;
     border: 1px solid rgba(255, 165, 0);
@@ -15,9 +13,8 @@
     -moz-box-shadow: -1px 6px 32px -9px rgba(255, 165, 0, 0.75);
 }
 
-.item:hover {
-    background-color: lightskyblue;
-    color: #1b1b69;
+.img {
+    width: 70%;
+    border-radius: 12px;
+    justify-content: center;
 }
-
-

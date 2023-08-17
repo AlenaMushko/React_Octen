@@ -1,10 +1,20 @@
 import React from 'react';
+import {useSelector} from "react-redux";
+
+import {CharacterItem} from "./CharacterItem";
+import styles from '../Episodes/Episodes.module.css'
 
 export const CharactersList = () => {
-    return (
-        <div>
+    const {characters} = useSelector(state => state.character);
 
-        </div>
+    return (
+        <section>
+            <ul className={styles.list}>
+                {characters?.map(character => (
+                    <CharacterItem key={character.id} item={character}/>
+                ))}
+            </ul>
+        </section>
     );
 };
 

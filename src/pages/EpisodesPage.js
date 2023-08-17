@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-import {episodeActions} from "../redux/episodes/slice";
+import {episodeActions} from "../redux";
 import {EpisodesList, Loader, Pagination} from "../components";
 
 export const EpisodesPage = () => {
@@ -16,7 +16,7 @@ export const EpisodesPage = () => {
         <div>
             {isLoading && <Loader/>}
             {error && <h2>{JSON.stringify(error)}</h2>}
-            <EpisodesList />
+            <EpisodesList/>
 
             <Pagination/>
         </div>
