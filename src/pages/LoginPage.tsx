@@ -8,13 +8,13 @@ import {FormControl, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 
-import {LoginValidators} from "../validators";
+import { RegisterValidators} from "../validators";
 import {IAuth} from "../interfaces";
 
  const LoginPage = () => {
      const {register,reset, handleSubmit, formState:{errors, isValid} } = useForm({
          mode: 'all',
-         resolver: joiResolver(LoginValidators),
+         resolver: joiResolver(RegisterValidators),
      });
      const onSubmit = (data:IAuth) => {
          console.log(data);

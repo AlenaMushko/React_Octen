@@ -7,15 +7,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { deepOrange } from '@mui/material/colors';
 import {joiResolver} from "@hookform/resolvers/joi";
+import {useNavigate} from "react-router-dom";
 
 import {RegisterValidators} from "../validators";
 import {IAuth} from "../interfaces";
 import {useAppDispatch, useAppSelector} from "../hooks/reduxHooks";
 import {authActions} from "../redux/slices/authSlice";
-import {AppRoutes} from "../routing";
-import {useNavigate} from "react-router-dom";
-
-
 
 const RegisterPage = () => {
     const {register,reset, handleSubmit, formState:{errors, isValid} } = useForm({
@@ -33,10 +30,9 @@ const RegisterPage = () => {
         console.log(requestStatus)
         if (requestStatus === 'fulfilled'){
             reset()
-            // navigate(AppRoutes.HOME)
+            // navigate(AppRoutes.LOGIN)
         }
 
-        reset();
     };
 
     return (
@@ -54,16 +50,9 @@ const RegisterPage = () => {
                 <TextField
                     label="Name"
                     variant="outlined"
-                    {...register('name')}
-                    error={!!errors.name}
-                    helperText={errors.name?.message as string}
-                />
-                <TextField
-                    label="Email"
-                    variant="outlined"
-                    {...register('email')}
-                    error={!!errors.email}
-                    helperText={errors.email?.message as string}
+                    {...register('username')}
+                    error={!!errors.username}
+                    helperText={errors.username?.message as string}
                 />
                 <TextField
                     label="Password"
