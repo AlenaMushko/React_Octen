@@ -15,4 +15,5 @@ export const CarsValidators = Joi.object({
         "string.max": "Year must be at most {#limit} characters",
         "string.required": "Year is required",
     }),
+    photo: Joi.string().allow('').optional()
 });

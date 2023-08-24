@@ -10,8 +10,16 @@ export const authService = {
         return apiService.post(urls.auth.register, user);
     },
 
-    async login(user: IUser): Promise<void> {
+    async login(user: IAuth): Promise<IUser> {
         const {data} = await apiService.post<ITokens>(urls.auth.login, user);
+        this.setTokens(data);
+        const {data:owner} = await this.owner();
+        return owner;
+    },
+
+    async refresh(): Promise<void> {
+        const refresh = this.getRefreshToken();
+        const {data} = await apiService.post<ITokens>(urls.auth.refresh, {refresh});
         this.setTokens(data)
     },
 

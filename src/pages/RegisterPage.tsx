@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { deepOrange } from '@mui/material/colors';
+import {deepOrange} from '@mui/material/colors';
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useNavigate} from "react-router-dom";
 
@@ -15,7 +15,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/reduxHooks";
 import {authActions} from "../redux/slices/authSlice";
 
 const RegisterPage = () => {
-    const {register,reset, handleSubmit, formState:{errors, isValid} } = useForm({
+    const {register, reset, handleSubmit, formState: {errors, isValid}} = useForm<IAuth>({
         mode: 'all',
         resolver: joiResolver(RegisterValidators),
     });
@@ -24,16 +24,13 @@ const RegisterPage = () => {
     const navigate = useNavigate();
     const {errorsRegister} = useAppSelector(state => state.auth);
 
-    const registerUser:SubmitHandler<IAuth> = async (user) => {
-        console.log(user)
-      const {meta:{requestStatus}} = await dispatch(authActions.register({user}));
-        console.log(requestStatus)
-        if (requestStatus === 'fulfilled'){
+    const registerUser: SubmitHandler<IAuth> = async (user) => {
+        const {meta: {requestStatus}} = await dispatch(authActions.register({user}));
+        if (requestStatus === 'fulfilled') {
             reset()
-            // navigate(AppRoutes.LOGIN)
+            navigate("/login")
         }
-
-    };
+    }
 
     return (
         <Box sx={{
@@ -45,8 +42,8 @@ const RegisterPage = () => {
             mt: 7,
             gap: 5
         }}>
-            <Typography sx={{ fontWeight: 500, fontSize: '32px', color: deepOrange[500] }}>REGISTER FORM</Typography>
-            <FormControl component="form" onSubmit={handleSubmit(registerUser)} sx={{ width: '70%', gap: 3 }}>
+            <Typography sx={{fontWeight: 500, fontSize: '32px', color: deepOrange[500]}}>REGISTER FORM</Typography>
+            <FormControl component="form" onSubmit={handleSubmit(registerUser)} sx={{width: '70%', gap: 3}}>
                 <TextField
                     label="Name"
                     variant="outlined"
@@ -65,13 +62,14 @@ const RegisterPage = () => {
                 <Button
                     type="submit"
                     variant="contained"
-                    endIcon={<SendIcon />}
-                    sx={{ padding: '12px' }}
+                    endIcon={<SendIcon/>}
+                    sx={{padding: '12px'}}
                     disabled={!isValid}
                 >
                     Register
                 </Button>
-                {errorsRegister?.username && <Typography sx={{  color: deepOrange[500] }}>user with this  name already exists</Typography>}
+                {errorsRegister?.username &&
+                    <Typography sx={{color: deepOrange[500]}}>user with this name already exists</Typography>}
             </FormControl>
         </Box>
     );
