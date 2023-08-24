@@ -1,39 +1,62 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-
-import {ICar} from "../../interfaces";
+import React, { useRef, useState } from "react";
+import { Card, CardContent, CardMedia, Typography, CardActionArea, Button } from "@mui/material";
+import { ICar } from "../../interfaces";
+import defaultCars from "../../assets/defaultCars.jpeg";
+import { carService } from "../../services";
 
 interface IProps {
-    car: ICar
+  car: ICar;
 }
 
-export const CarInfo:React.FC<IProps> = ({car}) => {
-    console.log(car)
-    return (
-        <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={car.photo || ''}
-                    alt="green iguana"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {car.brand}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {car.year}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {car.price}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
-    );
-}
+export const CarInfo: React.FC<IProps> = ({ car }) => {
+  const { id, brand, price, year, photo } = car;
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const photoInput = useRef<HTMLInputElement>(null);
+
+  const addPhoto = async () => {
+    if (photoInput.current) {
+        const formData = new FormData();
+        const file: Blob = photoInput.current.files[0];
+        formData.append('photo', file);
+        await carService.addPhoto(id, formData)
+        setSelectedImage(URL.createObjectURL(file));
+    }
+  };
+
+  return (
+    <Card sx={{ maxWidth: "50vw", margin: "10vh auto" }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          alt={brand}
+          sx={{ width: '100%' }}
+          image={selectedImage || photo || defaultCars}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            Brand: {brand}
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            Id: {id}
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            Year: {year}
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            Price: {price}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <Button variant="contained" component="label" sx={{width:'100%'}}>
+        Upload Photo
+        <input
+          type="file"
+          hidden
+          ref={photoInput}
+          accept={'image/jpeg, image/png'}
+          onChange={addPhoto}
+        />
+      </Button>
+    </Card>
+  );
+};

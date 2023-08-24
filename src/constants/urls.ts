@@ -6,7 +6,8 @@ const users = '/users'
 const urls = {
     cars: {
         base: cars,
-        byId: (id: number): string => `${cars}/${id}`
+        byId: (id: number): string => `${cars}/${id}`,
+        photo: (id: number): string => `${cars}/${id}/photo`
     },
     auth:{
         register:users,

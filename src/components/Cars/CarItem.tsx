@@ -7,6 +7,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from "@mui/material/Grid";
 import {Stack} from "@mui/material";
 import Button from "@mui/material/Button";
@@ -14,6 +15,7 @@ import Button from "@mui/material/Button";
 import {ICar} from "../../interfaces";
 import {useAppDispatch} from "../../hooks/reduxHooks";
 import {carActions} from "../../redux/slices/carsSlice";
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
     item: ICar
@@ -22,12 +24,14 @@ interface IProps {
 export const CarItem: React.FC<IProps> = ({item}) => {
     const {id, photo, brand, year, price} = item;
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const handleDelete = async () => {
         await dispatch(carActions.deleteCar({id}))
     };
     return (
-        <Card sx={{
+        <Card 
+        sx={{
             padding: '12px',
             transition: 'box-shadow 0.3s ease-in-out',
             boxShadow: '2px 0px 26px 0px rgba(68,138,255,0.75)',
@@ -36,9 +40,6 @@ export const CarItem: React.FC<IProps> = ({item}) => {
             }
         }}>
             <CardContent>
-                <ListItemAvatar>
-                    <Avatar alt={brand} src={photo}/>
-                </ListItemAvatar>
                 <ListItemText primary={`Brand: ${brand}`}/>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
@@ -48,7 +49,7 @@ export const CarItem: React.FC<IProps> = ({item}) => {
                             variant="body2"
                             color="text.primary"
                         >
-                            Рік:
+                            Year:
                         </Typography>
                         <Typography component="div" sx={{display: 'inline'}} variant="body2" color="text.primary">
                             {year}
@@ -61,7 +62,7 @@ export const CarItem: React.FC<IProps> = ({item}) => {
                             variant="body2"
                             color="text.primary"
                         >
-                            Ціна:
+                            Price:
                         </Typography>
                         <Typography component="div" sx={{display: 'inline'}} variant="body2" color="text.primary">
                             {price}
@@ -77,6 +78,10 @@ export const CarItem: React.FC<IProps> = ({item}) => {
                 <Button variant="contained" endIcon={<SyncAltIcon/>}
                         onClick={() => dispatch(carActions.setCarForUpdate({car: item}))}>
                     Update
+                </Button>
+                <Button variant="contained" endIcon={<ExpandMoreIcon/>}
+                        onClick={() => navigate(id.toString(), {state:item})}>
+                    Info
                 </Button>
             </Stack>
         </Card>

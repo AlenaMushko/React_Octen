@@ -31,16 +31,17 @@ export const CarForm = () => {
     }, [carForUpdate, setValue]);
 
     const handleSave: SubmitHandler<ICar> = async (car) => {
-        if (car.photo === "") {
-            car.photo = null;
-        }
+      
         await dispatch(carActions.create({car}))
         reset()
     };
 
     const handleUpdate: SubmitHandler<ICar> = async (car) => {
-        await dispatch(carActions.update({id: carForUpdate.id, car}))
-        reset()
+        if(carForUpdate){
+            await dispatch(carActions.update({id: carForUpdate.id, car}))
+            reset()
+        }
+    
     };
 
     return (

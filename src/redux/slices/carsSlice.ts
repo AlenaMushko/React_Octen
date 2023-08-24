@@ -29,20 +29,7 @@ const getAll = createAsyncThunk<IPagination<ICar>, void>(
             return rejectWithValue(err.response.data)
         }
     }
-)
-
-// const getById = createAsyncThunk<ICar, { id: number }>(
-//     'carsSlice/getById',
-//     async ({id}, {rejectWithValue}) => {
-//         try {
-//             const {data} = await carService.getById(id);
-//             return data
-//         } catch (e) {
-//             const err = e as AxiosError
-//             return rejectWithValue(err.response.data)
-//         }
-//     }
-// )
+);
 
 const create = createAsyncThunk<void, { car: ICar }>(
     'carsSlice/create',
@@ -120,7 +107,6 @@ const carActions = {
     create,
     update,
     deleteCar,
-    // getById
 }
 
 export {

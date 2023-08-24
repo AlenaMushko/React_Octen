@@ -1,3 +1,4 @@
+import React from "react";
 import {createBrowserRouter, Navigate,} from "react-router-dom";
 
 import {AppRoutes} from "./appRoutes";
@@ -17,12 +18,10 @@ export const router = createBrowserRouter([
             {
                 path: AppRoutes.CARS,
                 element: <CarsPage/>,
-                children: [
-                    {
-                        path: AppRoutes.CAR_ID,
-                        element: <CarPage/>
-                    }
-                ]
+            },
+            {
+                path: AppRoutes.CAR_ID,
+                element: <CarPage/>
             },
             {
                 path: AppRoutes.REGISTER,
