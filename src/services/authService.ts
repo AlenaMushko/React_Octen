@@ -13,7 +13,7 @@ export const authService = {
     async login(user: IAuth): Promise<IUser> {
         const {data} = await apiService.post<ITokens>(urls.auth.login, user);
         this.setTokens(data);
-        const {data:owner} = await this.owner();
+        const {data: owner} = await this.owner();
         return owner;
     },
 

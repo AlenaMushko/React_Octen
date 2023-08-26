@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {FormControl, TextField} from "@mui/material";
@@ -31,18 +31,19 @@ export const CarForm = () => {
     }, [carForUpdate, setValue]);
 
     const handleSave: SubmitHandler<ICar> = async (car) => {
-      
+
         await dispatch(carActions.create({car}))
         reset()
     };
 
     const handleUpdate: SubmitHandler<ICar> = async (car) => {
-        if(carForUpdate){
+        if (carForUpdate) {
             await dispatch(carActions.update({id: carForUpdate.id, car}))
             reset()
         }
-    
+
     };
+useState()
 
     return (
         <Box sx={{
@@ -87,17 +88,6 @@ export const CarForm = () => {
                     {...register('year')}
                     error={!!errors.year}
                     helperText={errors.year?.message as string}
-                />
-                <TextField
-                    label="Photo"
-                    variant="outlined"
-                    type="string"
-                    InputLabelProps={{
-                        shrink: true
-                    }}
-                    {...register('photo')}
-                    error={!!errors.photo}
-                    helperText={errors.photo?.message as string}
                 />
                 <Button
                     type="submit"

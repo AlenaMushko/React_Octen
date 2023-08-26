@@ -3,8 +3,8 @@ import {configureStore} from "@reduxjs/toolkit";
 import {carReducer} from "./slices/carsSlice";
 import {authReducer} from "./slices/authSlice";
 
-export const store=configureStore({
-    reducer:{
+export const store = configureStore({
+    reducer: {
         cars: carReducer,
         auth: authReducer
     }

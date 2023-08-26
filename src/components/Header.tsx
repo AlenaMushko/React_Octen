@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,9 +16,12 @@ export const Header: React.FC = () => {
     const {owner} = useAppSelector(state => state.auth);
     const dispatch = useAppDispatch();
 
-    if (authService.getAccesToken() && !owner) {
-        dispatch(authActions.owner())
-    }
+    useEffect(() => {
+        if (authService.getAccesToken() && !owner) {
+            dispatch(authActions.owner())
+        }
+    }, [owner, dispatch]);
+
 
     const handleLogout = () => dispatch(authActions.logout());
     return (

@@ -1,7 +1,5 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -15,14 +13,14 @@ import Button from "@mui/material/Button";
 import {ICar} from "../../interfaces";
 import {useAppDispatch} from "../../hooks/reduxHooks";
 import {carActions} from "../../redux/slices/carsSlice";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 interface IProps {
     item: ICar
 }
 
 export const CarItem: React.FC<IProps> = ({item}) => {
-    const {id, photo, brand, year, price} = item;
+    const {id, brand, year, price} = item;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -30,15 +28,15 @@ export const CarItem: React.FC<IProps> = ({item}) => {
         await dispatch(carActions.deleteCar({id}))
     };
     return (
-        <Card 
-        sx={{
-            padding: '12px',
-            transition: 'box-shadow 0.3s ease-in-out',
-            boxShadow: '2px 0px 26px 0px rgba(68,138,255,0.75)',
-            '&:hover': {
-                boxShadow: '2px 0px 26px 0px rgba(221,44,0,0.75)'
-            }
-        }}>
+        <Card
+            sx={{
+                padding: '12px',
+                transition: 'box-shadow 0.3s ease-in-out',
+                boxShadow: '2px 0px 26px 0px rgba(68,138,255,0.75)',
+                '&:hover': {
+                    boxShadow: '2px 0px 26px 0px rgba(221,44,0,0.75)'
+                }
+            }}>
             <CardContent>
                 <ListItemText primary={`Brand: ${brand}`}/>
                 <Grid container spacing={1}>
@@ -80,7 +78,7 @@ export const CarItem: React.FC<IProps> = ({item}) => {
                     Update
                 </Button>
                 <Button variant="contained" endIcon={<ExpandMoreIcon/>}
-                        onClick={() => navigate(id.toString(), {state:item})}>
+                        onClick={() => navigate(id.toString(), {state: item})}>
                     Info
                 </Button>
             </Stack>

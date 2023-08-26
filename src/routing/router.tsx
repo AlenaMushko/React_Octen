@@ -4,12 +4,12 @@ import {createBrowserRouter, Navigate,} from "react-router-dom";
 import {AppRoutes} from "./appRoutes";
 import {Layout} from '../layouts';
 import {Error} from '../components';
-import {RegisterPage, LoginPage,  CarPage, CarsPage} from '../pages';
+import {RegisterPage, LoginPage, CarPage, CarsPage} from '../pages';
 
 export const router = createBrowserRouter([
     {
         path: AppRoutes.HOME,
-        element: <Layout />,
+        element: <Layout/>,
         children: [
             {
                 index: true,

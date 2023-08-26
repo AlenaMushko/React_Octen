@@ -9,11 +9,11 @@ const urls = {
         byId: (id: number): string => `${cars}/${id}`,
         photo: (id: number): string => `${cars}/${id}/photo`
     },
-    auth:{
-        register:users,
-        login:auth,
-        refresh:`${auth}/refresh`,
-        owner:`${auth}/me`
+    auth: {
+        register: users,
+        login: auth,
+        refresh: `${auth}/refresh`,
+        owner: `${auth}/me`
     }
 }
 

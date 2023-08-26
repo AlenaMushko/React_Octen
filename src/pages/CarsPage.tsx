@@ -1,30 +1,20 @@
-import React, { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import React, {useContext} from "react";
+import {Outlet} from "react-router-dom";
 
-import { CarForm, CarList } from "../components";
-import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
-import { Pagination } from "@mui/material";
-import { carActions } from "../redux/slices/carsSlice";
+import {CarForm, CarList, CarPagination} from "../components";
+import {PathnameContext} from "../layouts/Layout";
 
 const CarsPage = () => {
-  const { isLoading } = useAppSelector((state) => state.cars); //todo
-  console.log(isLoading);
+    const location =useContext(PathnameContext);
 
-  const dispatch = useAppDispatch();
-  const cars = useAppSelector(state => state.cars.cars);
-
-  useEffect(() => {
-      dispatch(carActions.getAll());
-  }, [dispatch]);
-
-  return (
-    <div>
-      <Outlet />
-      <CarForm />
-      <CarList />
-      {/* <Pagination count={10} showFirstButton showLastButton /> */}
-    </div>
-  );
+    return (
+        <div>
+            <Outlet/>
+            <CarForm/>
+            <CarList/>
+            <CarPagination location={location}/>
+        </div>
+    );
 };
 
 export default CarsPage;

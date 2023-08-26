@@ -53,9 +53,9 @@ const owner = createAsyncThunk<IUser, void>(  //<IUser, void> = <поверта�
     }
 );
 
-const logout = createAsyncThunk<void , void>(
+const logout = createAsyncThunk<void, void>(
     'authSlice/logout',
-    async (_, {rejectWithValue})=>{
+    async (_, {rejectWithValue}) => {
         try {
             authService.deleteTokens();
         } catch (e) {

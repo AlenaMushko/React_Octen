@@ -1,8 +1,8 @@
 export const AppRoutes = {
-    HOME:  "/",
-    REGISTER:  "/register",
+    HOME: "/",
+    REGISTER: "/register",
     LOGIN: "/login",
-    CARS:'/cars',
-    CAR_ID:'/cars/:id',
+    CARS: '/cars',
+    CAR_ID: '/cars/:id',
 
 }
