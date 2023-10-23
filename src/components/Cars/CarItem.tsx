@@ -22,7 +22,7 @@ interface IProps {
 }
 
 export const CarItem: React.FC<IProps> = ({item}) => {
-    const {id, photo, brand, year, price} = item;
+    const {id, brand, year, price} = item;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -84,6 +84,8 @@ export const CarItem: React.FC<IProps> = ({item}) => {
                     Info
                 </Button>
             </Stack>
+
+            
         </Card>
     );
 }
